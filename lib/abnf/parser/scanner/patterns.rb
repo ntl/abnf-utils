@@ -17,6 +17,9 @@ module ABNF
           /\A%(?<base>b)(?<characters>[01]+(?:-[01]+|(?:\.[01]+)+)?)/n => 'num-val',
           /\A"(?<characters>[\x20-\x21\x23-\x7E]*)"/n => 'char-val',
 
+          /\A(?<low>(?<high>[[:digit:]]+))(?!\*)/n => 'repeat',
+          /\A(?<low>[[:digit:]]*)\*(?<high>[[:digit:]]*)/n => 'repeat',
+
           /\A\[#{C_WSP}*/n => 'option-START',
           /\A#{C_WSP}*\]/n => 'option-STOP',
 

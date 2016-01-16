@@ -61,6 +61,12 @@ module ABNF
         end
       end
 
+      class Repeat < Token
+        def self.type
+          %{repeat}
+        end
+      end
+
       class Rulename < Token
         def self.type
           %{rulename}

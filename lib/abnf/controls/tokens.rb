@@ -29,6 +29,27 @@ module ABNF
         Parser::Token::GroupStop.new abnf, Hash.new
       end
 
+      module Repeat
+        def self.value
+          Any.value
+        end
+
+        Any = Value.define do
+          abnf = Controls::ABNF::Repeat::Any.value
+          Parser::Token::Repeat.new abnf, 'low' => '', 'high' => ''
+        end
+
+        Fixed = Value.define do
+          abnf = Controls::ABNF::Repeat::Fixed.value
+          Parser::Token::Repeat.new abnf, 'low' => '1', 'high' => '1'
+        end
+
+        Range = Value.define do
+          abnf = Controls::ABNF::Repeat::Range.value
+          Parser::Token::Repeat.new abnf, 'low' => '1', 'high' => '2'
+        end
+      end
+
       Rulename = Value.define do
         Parser::Token::Rulename.new 'some-rule', Hash.new
       end

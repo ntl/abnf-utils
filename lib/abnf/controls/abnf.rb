@@ -35,6 +35,16 @@ module ABNF
       OptionStart = Value.define %{[ }
       OptionStop = Value.define %{ ]}
 
+      module Repeat
+        def self.value
+          Any.value
+        end
+
+        Any = Value.define %{*}
+        Fixed = Value.define %{1}
+        Range = Value.define %{1*2}
+      end
+
       SingleTerminal = Value.define %{some-rule = #{Elements::CharVal.value}\r\n}
 
       Example = SingleTerminal

@@ -63,12 +63,12 @@ module ABNF
       end
 
       module Assertions
-        def scan? abnf, expected_tokens
-          token_stream.clear
+        def scanned? expected_tokens
+          expected_tokens = [expected_tokens] unless expected_tokens.is_a? Array
 
-          self.(abnf)
+          actual_tokens = token_stream.last expected_tokens.size
 
-          token_stream == expected_tokens
+          actual_tokens == expected_tokens
         end
       end
     end
