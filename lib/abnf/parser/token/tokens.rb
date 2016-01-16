@@ -1,6 +1,12 @@
 module ABNF
   module Parser
     class Token
+      class AlternativeDelimiter < Token
+        def self.type
+          %{alternation-DELIMITER}
+        end
+      end
+
       class C_NL < Token
         def self.type
           %{c-nl}

@@ -20,6 +20,8 @@ module ABNF
           /\A(?<low>(?<high>[[:digit:]]+))(?!\*)/n => 'repeat',
           /\A(?<low>[[:digit:]]*)\*(?<high>[[:digit:]]*)/n => 'repeat',
 
+          /\A#{C_WSP}*\/#{C_WSP}*/n => 'alternation-DELIMITER',
+
           /\A\[#{C_WSP}*/n => 'option-START',
           /\A#{C_WSP}*\]/n => 'option-STOP',
 

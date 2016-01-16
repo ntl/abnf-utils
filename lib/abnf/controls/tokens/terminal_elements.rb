@@ -18,21 +18,21 @@ module ABNF
 
           module BinVal
             Range = Value.define do
-              abnf = Controls::ABNF::Elements::NumVal::BinVal::Range.value
+              abnf = Controls::ABNF::NumVal::BinVal::Range.value
               characters = abnf[2..-1]
 
               Parser::Token::NumVal.new abnf, 'base' => 'b', 'characters' => characters
             end
 
             Sequence = Value.define do
-              abnf = Controls::ABNF::Elements::NumVal::BinVal::Sequence.value
+              abnf = Controls::ABNF::NumVal::BinVal::Sequence.value
               characters = abnf[2..-1]
 
               Parser::Token::NumVal.new abnf, 'base' => 'b', 'characters' => characters
             end
 
             Single = Value.define do
-              abnf = Controls::ABNF::Elements::NumVal::BinVal::Single.value
+              abnf = Controls::ABNF::NumVal::BinVal::Single.value
               characters = abnf[2..-1]
 
               Parser::Token::NumVal.new abnf, 'base' => 'b', 'characters' => characters
@@ -41,21 +41,21 @@ module ABNF
 
           module DecVal
             Range = Value.define do
-              abnf = Controls::ABNF::Elements::NumVal::DecVal::Range.value
+              abnf = Controls::ABNF::NumVal::DecVal::Range.value
               characters = abnf[2..-1]
 
               Parser::Token::NumVal.new abnf, 'base' => 'd', 'characters' => characters
             end
 
             Sequence = Value.define do
-              abnf = Controls::ABNF::Elements::NumVal::DecVal::Sequence.value
+              abnf = Controls::ABNF::NumVal::DecVal::Sequence.value
               characters = abnf[2..-1]
 
               Parser::Token::NumVal.new abnf, 'base' => 'd', 'characters' => characters
             end
 
             Single = Value.define do
-              abnf = Controls::ABNF::Elements::NumVal::DecVal::Single.value
+              abnf = Controls::ABNF::NumVal::DecVal::Single.value
               characters = abnf[2..-1]
 
               Parser::Token::NumVal.new abnf, 'base' => 'd', 'characters' => characters
@@ -64,21 +64,21 @@ module ABNF
 
           module HexVal
             Range = Value.define do
-              abnf = Controls::ABNF::Elements::NumVal::HexVal::Range.value
+              abnf = Controls::ABNF::NumVal::HexVal::Range.value
               characters = abnf[2..-1]
 
               Parser::Token::NumVal.new abnf, 'base' => 'x', 'characters' => characters
             end
 
             Sequence = Value.define do
-              abnf = Controls::ABNF::Elements::NumVal::HexVal::Sequence.value
+              abnf = Controls::ABNF::NumVal::HexVal::Sequence.value
               characters = abnf[2..-1]
 
               Parser::Token::NumVal.new abnf, 'base' => 'x', 'characters' => characters
             end
 
             Single = Value.define do
-              abnf = Controls::ABNF::Elements::NumVal::HexVal::Single.value
+              abnf = Controls::ABNF::NumVal::HexVal::Single.value
               characters = abnf[2..-1]
 
               Parser::Token::NumVal.new abnf, 'base' => 'x', 'characters' => characters
@@ -87,14 +87,14 @@ module ABNF
         end
 
         CharVal = Value.define do
-          abnf = Controls::ABNF::Elements::CharVal.value
+          abnf = Controls::ABNF::CharVal.value
           characters = abnf[1...-1]
 
           Parser::Token::CharVal.new abnf, 'characters' => characters
         end
 
         ProseVal = Value.define do
-          abnf = Controls::ABNF::Elements::ProseVal.value
+          abnf = Controls::ABNF::ProseVal.value
           prose = abnf[1...-1]
 
           Parser::Token::ProseVal.new abnf, 'prose' => prose

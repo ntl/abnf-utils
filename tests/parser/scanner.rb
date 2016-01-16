@@ -3,7 +3,7 @@ require_relative './parser_tests_init'
 context 'Scanner' do
   scanner = Parser::Scanner.new
 
-  context 'num-val' do
+  context 'Numeric Values' do
     %w(BinVal DecVal HexVal).each do |base|
       %w(Single Range Sequence).each do |variant|
         test "#{base} #{variant}" do
@@ -19,8 +19,8 @@ context 'Scanner' do
     end
   end
 
-  test 'char-val' do
-    abnf = Controls::ABNF::Elements::CharVal.value
+  test 'Character Values' do
+    abnf = Controls::ABNF::CharVal.value
     token = Controls::Tokens::TerminalElements::CharVal.value
 
     scanner.(abnf)
@@ -30,8 +30,8 @@ context 'Scanner' do
     end
   end
 
-  test 'prose-val' do
-    abnf = Controls::ABNF::Elements::ProseVal.value
+  test 'Prose Values' do
+    abnf = Controls::ABNF::ProseVal.value
     token = Controls::Tokens::TerminalElements::ProseVal.value
 
     scanner.(abnf)
@@ -41,7 +41,7 @@ context 'Scanner' do
     end
   end
 
-  test 'option (start)' do
+  test 'Start of Option' do
     abnf = Controls::ABNF::OptionStart.value
     token = Controls::Tokens::OptionStart.value
 
@@ -52,7 +52,7 @@ context 'Scanner' do
     end
   end
 
-  test 'option (stop)' do
+  test 'Option Stop' do
     abnf = Controls::ABNF::OptionStop.value
     token = Controls::Tokens::OptionStop.value
 
@@ -63,7 +63,7 @@ context 'Scanner' do
     end
   end
 
-  test 'group (start)' do
+  test 'Start of Group' do
     abnf = Controls::ABNF::GroupStart.value
     token = Controls::Tokens::GroupStart.value
 
@@ -74,7 +74,7 @@ context 'Scanner' do
     end
   end
 
-  test 'group (stop)' do
+  test 'Group Stop' do
     abnf = Controls::ABNF::GroupStop.value
     token = Controls::Tokens::GroupStop.value
 
@@ -85,7 +85,7 @@ context 'Scanner' do
     end
   end
 
-  context 'repeat' do
+  context 'Repeat' do
     test 'Any' do
       abnf = Controls::ABNF::Repeat::Any.value
       token = Controls::Tokens::Repeat::Any.value
@@ -117,6 +117,17 @@ context 'Scanner' do
       assert scanner do |scanner|
         scanner.scanned? token
       end
+    end
+  end
+
+  test 'Alternative Delimiter' do
+    abnf = Controls::ABNF::AlternativeDelimiter.value
+    token = Controls::Tokens::AlternativeDelimiter.value
+
+    scanner.(abnf)
+
+    assert scanner do |scanner|
+      scanner.scanned? token
     end
   end
 

@@ -1,6 +1,10 @@
 module ABNF
   module Controls
     module Tokens
+      AlternativeDelimiter = Value.define do
+        Parser::Token::AlternativeDelimiter.new ' / ', Hash.new
+      end
+
       C_NL = Value.define do
         Parser::Token::C_NL.new "\r\n", Hash.new
       end
