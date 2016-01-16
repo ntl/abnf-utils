@@ -3,7 +3,7 @@ require_relative './parser_tests_init'
 context 'Scanner' do
   scanner = Parser::Scanner.new
 
-  context 'NumVal' do
+  context 'num-val' do
     %w(BinVal DecVal HexVal).each do |base|
       %w(Single Range Sequence).each do |variant|
         test "#{base} #{variant}" do
@@ -17,7 +17,7 @@ context 'Scanner' do
     end
   end
 
-  test 'CharVal' do
+  test 'char-val' do
     abnf = Controls::ABNF::Elements::CharVal.value
     token = Controls::Tokens::TerminalElements::CharVal.value
 
@@ -26,7 +26,7 @@ context 'Scanner' do
     end
   end
 
-  test 'ProseVal' do
+  test 'prose-val' do
     abnf = Controls::ABNF::Elements::ProseVal.value
     token = Controls::Tokens::TerminalElements::ProseVal.value
 
@@ -35,7 +35,7 @@ context 'Scanner' do
     end
   end
 
-  test 'OptionStart' do
+  test 'option (start)' do
     abnf = Controls::ABNF::OptionStart.value
     token = Controls::Tokens::OptionStart.value
 
@@ -44,9 +44,27 @@ context 'Scanner' do
     end
   end
 
-  test 'OptionStop' do
+  test 'option (stop)' do
     abnf = Controls::ABNF::OptionStop.value
     token = Controls::Tokens::OptionStop.value
+
+    assert scanner do |scanner|
+      scanner.scan? abnf, [token]
+    end
+  end
+
+  test 'group (start)' do
+    abnf = Controls::ABNF::GroupStart.value
+    token = Controls::Tokens::GroupStart.value
+
+    assert scanner do |scanner|
+      scanner.scan? abnf, [token]
+    end
+  end
+
+  test 'group (stop)' do
+    abnf = Controls::ABNF::GroupStop.value
+    token = Controls::Tokens::GroupStop.value
 
     assert scanner do |scanner|
       scanner.scan? abnf, [token]

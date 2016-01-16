@@ -20,6 +20,9 @@ module ABNF
           /\A\[#{C_WSP}*/n => 'option-START',
           /\A#{C_WSP}*\]/n => 'option-STOP',
 
+          /\A\(#{C_WSP}*/n => 'group-START',
+          /\A#{C_WSP}*\)/n => 'group-STOP',
+
           /\A[[:alpha:]][-[:alnum:]]*/n => 'rulename',
           /\A#{C_WSP}*(?<operator>=\/?)#{C_WSP}*/n => 'defined-as',
 

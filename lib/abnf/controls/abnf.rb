@@ -29,6 +29,9 @@ module ABNF
         ProseVal = Value.define %{<Some Prose>}
       end
 
+      GroupStart = Value.define %{( }
+      GroupStop = Value.define %{ )}
+
       OptionStart = Value.define %{[ }
       OptionStop = Value.define %{ ]}
 

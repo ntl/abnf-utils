@@ -19,6 +19,16 @@ module ABNF
         Parser::Token::OptionStop.new abnf, Hash.new
       end
 
+      GroupStart = Value.define do
+        abnf = Controls::ABNF::GroupStart.value
+        Parser::Token::GroupStart.new abnf, Hash.new
+      end
+
+      GroupStop = Value.define do
+        abnf = Controls::ABNF::GroupStop.value
+        Parser::Token::GroupStop.new abnf, Hash.new
+      end
+
       Rulename = Value.define do
         Parser::Token::Rulename.new 'some-rule', Hash.new
       end

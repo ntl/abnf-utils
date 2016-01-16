@@ -25,6 +25,18 @@ module ABNF
         end
       end
 
+      class GroupStart < Token
+        def self.type
+          %{group-START}
+        end
+      end
+
+      class GroupStop < Token
+        def self.type
+          %{group-STOP}
+        end
+      end
+
       class NumVal < Token
         def self.type
           %{num-val}
