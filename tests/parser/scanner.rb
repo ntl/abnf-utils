@@ -17,6 +17,15 @@ context 'Scanner' do
     end
   end
 
+  test 'CharVal' do
+    abnf = Controls::ABNF::Elements::CharVal.value
+    token = Controls::Tokens::Elements::CharVal.value
+
+    assert scanner do |scanner|
+      scanner.scan? abnf, [token]
+    end
+  end
+
   test 'Full Rule' do
     abnf = Controls::ABNF::SingleTerminal.value
 
