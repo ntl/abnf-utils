@@ -145,4 +145,10 @@ context 'Scanner' do
       ]
     end
   end
+
+  test 'RFC 5234' do
+    abnf = Controls::ABNF::RFC5234.value
+
+    scanner.(abnf)
+  end
 end

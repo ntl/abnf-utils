@@ -8,7 +8,7 @@ module ABNF
 
         C_NL = /(?:;[[:blank:]\x21-\x7E]*)?\r\n/n
 
-        C_WSP = /#{C_NL}?[[:blank:]]+/n
+        C_WSP = /#{C_NL}?[[:blank:]]/n
 
         Table = {
           /\A<(?<prose>[\x20-\x3D\x3F-\x7E]*)>/n => 'prose-val',
@@ -20,8 +20,6 @@ module ABNF
           /\A(?<low>(?<high>[[:digit:]]+))(?!\*)/n => 'repeat',
           /\A(?<low>[[:digit:]]*)\*(?<high>[[:digit:]]*)/n => 'repeat',
 
-          /\A#{C_WSP}*\/#{C_WSP}*/n => 'alternation-DELIMITER',
-
           /\A\[#{C_WSP}*/n => 'option-START',
           /\A#{C_WSP}*\]/n => 'option-STOP',
 
@@ -31,8 +29,10 @@ module ABNF
           /\A[[:alpha:]][-[:alnum:]]*/n => 'rulename',
           /\A#{C_WSP}*(?<operator>=\/?)#{C_WSP}*/n => 'defined-as',
 
+          /\A#{C_WSP}*\/#{C_WSP}*/n => 'alternation-DELIMITER',
+
           /\A#{C_WSP}+/n => '*c-wsp',
-          /\A#{C_NL}/n => 'c-nl',
+          /\A#{C_NL}+/n => 'c-nl',
         }
       end
     end
