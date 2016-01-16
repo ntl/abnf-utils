@@ -11,10 +11,13 @@ module ABNF
         C_WSP = /#{C_NL}?[[:blank:]]+/n
 
         Table = {
-          'hex-val' => /\A%x[[:xdigit:]]+(?:-[[:xdigit:]]+|(?:\.[[:xdigit:]]+)+)?/n,
+          'char-val' => /\A"(?<characters>[\x20-\x21\x23-\x7E]*)"/,
+          'hex-val' => /\A%(?<base>x)(?<characters>[[:xdigit:]]+(?:-[[:xdigit:]]+|(?:\.[[:xdigit:]]+)+)?)/n,
+          'dec-val' => /\A%(?<base>d)(?<characters>[[:digit:]]+(?:-[[:digit:]]+|(?:\.[[:digit:]]+)+)?)/n,
+          'bin-val' => /\A%(?<base>b)(?<characters>[01]+(?:-[01]+|(?:\.[01]+)+)?)/n,
 
           'rulename' => /\A[[:alpha:]][-[:alnum:]]*/n,
-          'defined-as' => /\A#{C_WSP}*=\/?#{C_WSP}*/n,
+          'defined-as' => /\A#{C_WSP}*(?<operator>=\/?)#{C_WSP}*/n,
 
           '*c-wsp' => /\A#{C_WSP}/n,
           'c-nl' => /\A#{C_NL}/n,

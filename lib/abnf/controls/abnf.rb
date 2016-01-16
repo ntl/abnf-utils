@@ -3,7 +3,7 @@ module ABNF
     module ABNF
       module SingleTerminal
         def self.value
-          %{terminal = %x66.6f.6f\r\n}
+          %{some-rule = "foo"\r\n}
         end
       end
 

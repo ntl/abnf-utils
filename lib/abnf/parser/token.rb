@@ -2,11 +2,15 @@ module ABNF
   module Parser
     class Token < Struct.new :abnf, :captures
       def inspect
-        "#<#{self.class} #{type.inspect} #{abnf.inspect}>"
-      end
+        captures = self.captures.map do |name, value|
+          "#{name}=#{value.inspect}"
+        end
 
-      def type
-        self.class.type
+        if captures.empty?
+          "#<#{self.class} #{abnf.inspect}>"
+        else
+          "#<#{self.class} #{captures * ', '} #{abnf.inspect}>"
+        end
       end
 
       def self.build type, match

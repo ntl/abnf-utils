@@ -4,7 +4,7 @@ module ABNF
       attr_writer :patterns
       attr_writer :token_stream
 
-      def self.build token_stream
+      def self.build token_stream=nil
         token_stream ||= Token::Stream.new
 
         instance = new
@@ -51,7 +51,7 @@ module ABNF
       end
 
       def logger
-        @@logger ||= ExtendedLogger.get self.class
+        ExtendedLogger.get self.class
       end
 
       def patterns
@@ -63,13 +63,12 @@ module ABNF
       end
 
       module Assertions
-        def scan? abnf, expected_token_types
+        def scan? abnf, expected_tokens
+          token_stream.clear
+
           self.(abnf)
 
-          token_sources = token_stream.map &:abnf
-          token_types = token_stream.map &:type
-
-          token_sources.join == abnf and token_types == expected_token_types
+          token_stream == expected_tokens
         end
       end
     end
