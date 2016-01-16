@@ -31,6 +31,18 @@ module ABNF
         end
       end
 
+      class OptionStart < Token
+        def self.types
+          %w(option-START)
+        end
+      end
+
+      class ProseVal < Token
+        def self.types
+          %w(prose-val)
+        end
+      end
+
       class Rulename < Token
         def self.types
           %w(rulename)
