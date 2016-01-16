@@ -14,6 +14,11 @@ module ABNF
         Parser::Token::OptionStart.new abnf, Hash.new
       end
 
+      OptionStop = Value.define do
+        abnf = Controls::ABNF::OptionStop.value
+        Parser::Token::OptionStop.new abnf, Hash.new
+      end
+
       Rulename = Value.define do
         Parser::Token::Rulename.new 'some-rule', Hash.new
       end

@@ -37,7 +37,7 @@ module ABNF
       def next abnf
         token = nil
 
-        patterns.each do |type, pattern|
+        patterns.each do |pattern, type|
           match = pattern.match abnf
           next unless match
 

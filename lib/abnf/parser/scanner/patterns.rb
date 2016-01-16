@@ -11,19 +11,20 @@ module ABNF
         C_WSP = /#{C_NL}?[[:blank:]]+/n
 
         Table = {
-          'prose-val' => /\A<(?<prose>[\x20-\x3D\x3F-\x7E]*)>/n,
-          'hex-val' => /\A%(?<base>x)(?<characters>[[:xdigit:]]+(?:-[[:xdigit:]]+|(?:\.[[:xdigit:]]+)+)?)/n,
-          'dec-val' => /\A%(?<base>d)(?<characters>[[:digit:]]+(?:-[[:digit:]]+|(?:\.[[:digit:]]+)+)?)/n,
-          'bin-val' => /\A%(?<base>b)(?<characters>[01]+(?:-[01]+|(?:\.[01]+)+)?)/n,
-          'char-val' => /\A"(?<characters>[\x20-\x21\x23-\x7E]*)"/n,
+          /\A<(?<prose>[\x20-\x3D\x3F-\x7E]*)>/n => 'prose-val',
+          /\A%(?<base>x)(?<characters>[[:xdigit:]]+(?:-[[:xdigit:]]+|(?:\.[[:xdigit:]]+)+)?)/n => 'num-val',
+          /\A%(?<base>d)(?<characters>[[:digit:]]+(?:-[[:digit:]]+|(?:\.[[:digit:]]+)+)?)/n => 'num-val',
+          /\A%(?<base>b)(?<characters>[01]+(?:-[01]+|(?:\.[01]+)+)?)/n => 'num-val',
+          /\A"(?<characters>[\x20-\x21\x23-\x7E]*)"/n => 'char-val',
 
-          'option-START' => /\A\[#{C_WSP}*/n,
+          /\A\[#{C_WSP}*/n => 'option-START',
+          /\A#{C_WSP}*\]/n => 'option-STOP',
 
-          'rulename' => /\A[[:alpha:]][-[:alnum:]]*/n,
-          'defined-as' => /\A#{C_WSP}*(?<operator>=\/?)#{C_WSP}*/n,
+          /\A[[:alpha:]][-[:alnum:]]*/n => 'rulename',
+          /\A#{C_WSP}*(?<operator>=\/?)#{C_WSP}*/n => 'defined-as',
 
-          '*c-wsp' => /\A#{C_WSP}+/n,
-          'c-nl' => /\A#{C_NL}/n,
+          /\A#{C_WSP}+/n => '*c-wsp',
+          /\A#{C_NL}/n => 'c-nl',
         }
       end
     end

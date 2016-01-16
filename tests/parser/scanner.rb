@@ -44,6 +44,15 @@ context 'Scanner' do
     end
   end
 
+  test 'OptionStop' do
+    abnf = Controls::ABNF::OptionStop.value
+    token = Controls::Tokens::OptionStop.value
+
+    assert scanner do |scanner|
+      scanner.scan? abnf, [token]
+    end
+  end
+
   test 'Full Rule' do
     abnf = Controls::ABNF::SingleTerminal.value
 

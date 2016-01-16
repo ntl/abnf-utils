@@ -2,50 +2,56 @@ module ABNF
   module Parser
     class Token
       class C_NL < Token
-        def self.types
-          %w(c-nl)
+        def self.type
+          %{c-nl}
         end
       end
 
       class C_WSP < Token
-        def self.types
-          %w(*c-wsp)
+        def self.type
+          %{*c-wsp}
         end
       end
 
       class CharVal < Token
-        def self.types
-          %w(char-val)
+        def self.type
+          %{char-val}
         end
       end
 
       class DefinedAs < Token
-        def self.types
-          %w(defined-as)
+        def self.type
+          %{defined-as}
         end
       end
 
       class NumVal < Token
-        def self.types
-          %w(bin-val dec-val hex-val)
+        def self.type
+          %{num-val}
         end
       end
 
       class OptionStart < Token
-        def self.types
-          %w(option-START)
+        def self.type
+          %{option-START}
+        end
+      end
+
+      class OptionStop < Token
+        def self.type
+          %{option-STOP}
         end
       end
 
       class ProseVal < Token
-        def self.types
-          %w(prose-val)
+        def self.type
+          %{prose-val}
         end
       end
 
       class Rulename < Token
-        def self.types
-          %w(rulename)
+        def self.type
+          %{rulename}
         end
       end
     end

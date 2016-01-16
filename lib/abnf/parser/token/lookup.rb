@@ -28,9 +28,8 @@ module ABNF
 
         def table
           @table ||= subclasses.each_with_object Hash.new do |cls, hash|
-            cls.types.each do |type|
-              hash[type] = cls
-            end
+            type = cls.type
+            hash[type] = cls
           end
         end
       end

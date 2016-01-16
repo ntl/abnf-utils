@@ -30,6 +30,7 @@ module ABNF
       end
 
       OptionStart = Value.define %{[ }
+      OptionStop = Value.define %{ ]}
 
       SingleTerminal = Value.define %{some-rule = #{Elements::CharVal.value}\r\n}
 
