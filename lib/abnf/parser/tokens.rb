@@ -3,12 +3,6 @@ module ABNF
     class AlternativeDelimiter < Token
     end
 
-    class C_NL < Token
-    end
-
-    class C_WSP < Token
-    end
-
     class CharVal < Token
     end
 
@@ -19,6 +13,9 @@ module ABNF
     end
 
     class GroupStop < Token
+    end
+
+    class Newline < Token
     end
 
     class NumVal < Token
@@ -37,6 +34,9 @@ module ABNF
     end
 
     class Rulename < Token
+    end
+
+    class Whitespace < Token
     end
   end
 end

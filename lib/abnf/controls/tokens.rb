@@ -5,8 +5,8 @@ module ABNF
         Parser::AlternativeDelimiter.new ' / ', Hash.new
       end
 
-      C_NL = Value.define do
-        Parser::C_NL.new "\r\n", Hash.new
+      Newline = Value.define do
+        Parser::Newline.new "\r\n", Hash.new
       end
 
       DefinedAs = Value.define do

@@ -31,8 +31,8 @@ module ABNF
 
           /\A#{C_WSP}*\/#{C_WSP}*/n => AlternativeDelimiter,
 
-          /\A#{C_WSP}+/n => Parser::C_WSP,
-          /\A#{C_NL}+/n => Parser::C_NL,
+          /\A#{C_WSP}+/n => Whitespace,
+          /\A#{C_NL}+/n => Newline,
         }
       end
     end

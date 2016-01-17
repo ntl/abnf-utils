@@ -151,7 +151,7 @@ context 'Scanner' do
         Controls::Tokens::Rulename.value,
         Controls::Tokens::DefinedAs.value,
         Controls::Tokens::TerminalElements.example,
-        Controls::Tokens::C_NL.value,
+        Controls::Tokens::Newline.value,
       ]
     end
   end
