@@ -2,6 +2,7 @@ module ABNF
   module Parser
     class Scanner
       attr_writer :patterns
+      attr_writer :token_count
       attr_writer :token_stream
 
       def self.build token_stream=nil
@@ -17,21 +18,28 @@ module ABNF
       end
 
       def call abnf
-        logger.info "Starting scan (Bytes: #{abnf.bytesize})"
+        logger.info "Starting scan (Characters: #{abnf.size})"
         logger.debug do abnf end
-
-        token_count = 0
 
         until abnf.empty?
           token, abnf = self.next abnf
 
-          logger.debug token.inspect
-
-          token_stream << token
-          token_count += 1
+          push_token token
         end
 
         logger.info "Finished scan (Tokens: #{token_count})"
+      end
+
+      def increment_token_count
+        self.token_count += 1
+      end
+
+      def inspect
+        "#<#{self.class.name} token_count=#{token_count}>"
+      end
+
+      def logger
+        ExtendedLogger.get self.class
       end
 
       def next abnf
@@ -50,12 +58,18 @@ module ABNF
         raise SyntaxError.build abnf unless token
       end
 
-      def logger
-        ExtendedLogger.get self.class
-      end
-
       def patterns
         @patterns ||= Patterns
+      end
+
+      def push_token token
+        logger.debug token.inspect
+        token_stream << token
+        increment_token_count
+      end
+
+      def token_count
+        @token_count ||= 0
       end
 
       def token_stream
@@ -63,12 +77,20 @@ module ABNF
       end
 
       module Assertions
-        def scanned? expected_tokens
+        def output? expected_tokens
           expected_tokens = [expected_tokens] unless expected_tokens.is_a? Array
 
           actual_tokens = token_stream.last expected_tokens.size
 
           actual_tokens == expected_tokens
+        end
+
+        def scanned? expected_abnf
+          abnf_per_token = token_stream.map &:abnf
+
+          actual_abnf = abnf_per_token.join
+
+          actual_abnf == expected_abnf
         end
       end
     end
