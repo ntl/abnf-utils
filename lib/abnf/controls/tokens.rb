@@ -2,35 +2,35 @@ module ABNF
   module Controls
     module Tokens
       AlternativeDelimiter = Value.define do
-        Parser::AlternativeDelimiter.new ' / ', Hash.new
+        Parser::Tokens::AlternativeDelimiter.new ' / ', Hash.new
       end
 
       Newline = Value.define do
-        Parser::Newline.new "\r\n", Hash.new
+        Parser::Tokens::Newline.new "\r\n", Hash.new
       end
 
       DefinedAs = Value.define do
-        Parser::DefinedAs.new ' = ', 'operator' => '='
+        Parser::Tokens::DefinedAs.new ' = ', 'operator' => '='
       end
 
       OptionStart = Value.define do
         abnf = Controls::ABNF::OptionStart.value
-        Parser::OptionStart.new abnf, Hash.new
+        Parser::Tokens::OptionStart.new abnf, Hash.new
       end
 
       OptionStop = Value.define do
         abnf = Controls::ABNF::OptionStop.value
-        Parser::OptionStop.new abnf, Hash.new
+        Parser::Tokens::OptionStop.new abnf, Hash.new
       end
 
       GroupStart = Value.define do
         abnf = Controls::ABNF::GroupStart.value
-        Parser::GroupStart.new abnf, Hash.new
+        Parser::Tokens::GroupStart.new abnf, Hash.new
       end
 
       GroupStop = Value.define do
         abnf = Controls::ABNF::GroupStop.value
-        Parser::GroupStop.new abnf, Hash.new
+        Parser::Tokens::GroupStop.new abnf, Hash.new
       end
 
       module Repeat
@@ -40,22 +40,22 @@ module ABNF
 
         Any = Value.define do
           abnf = Controls::ABNF::Repeat::Any.value
-          Parser::Repeat.new abnf, 'low' => '', 'high' => ''
+          Parser::Tokens::Repeat.new abnf, 'low' => '', 'high' => ''
         end
 
         Fixed = Value.define do
           abnf = Controls::ABNF::Repeat::Fixed.value
-          Parser::Repeat.new abnf, 'low' => '1', 'high' => '1'
+          Parser::Tokens::Repeat.new abnf, 'low' => '1', 'high' => '1'
         end
 
         Range = Value.define do
           abnf = Controls::ABNF::Repeat::Range.value
-          Parser::Repeat.new abnf, 'low' => '1', 'high' => '2'
+          Parser::Tokens::Repeat.new abnf, 'low' => '1', 'high' => '2'
         end
       end
 
       Rulename = Value.define do
-        Parser::Rulename.new 'some-rule', Hash.new
+        Parser::Tokens::Rulename.new 'some-rule', Hash.new
       end
     end
   end
