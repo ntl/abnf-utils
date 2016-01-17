@@ -64,8 +64,10 @@ module ABNF
 
       def push_token token
         logger.debug token.inspect
-        token_stream << token
+
         increment_token_count
+
+        token_stream << token
       end
 
       def token_count

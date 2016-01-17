@@ -11,28 +11,28 @@ module ABNF
         C_WSP = /#{C_NL}?[[:blank:]]/n
 
         Table = {
-          /\A<(?<prose>[\x20-\x3D\x3F-\x7E]*)>/n => Token::ProseVal,
-          /\A%(?<base>x)(?<characters>[[:xdigit:]]+(?:-[[:xdigit:]]+|(?:\.[[:xdigit:]]+)+)?)/n => Token::NumVal,
-          /\A%(?<base>d)(?<characters>[[:digit:]]+(?:-[[:digit:]]+|(?:\.[[:digit:]]+)+)?)/n => Token::NumVal,
-          /\A%(?<base>b)(?<characters>[01]+(?:-[01]+|(?:\.[01]+)+)?)/n => Token::NumVal,
-          /\A"(?<characters>[\x20-\x21\x23-\x7E]*)"/n => Token::CharVal,
+          /\A<(?<prose>[\x20-\x3D\x3F-\x7E]*)>/n => ProseVal,
+          /\A%(?<base>x)(?<characters>[[:xdigit:]]+(?:-[[:xdigit:]]+|(?:\.[[:xdigit:]]+)+)?)/n => NumVal,
+          /\A%(?<base>d)(?<characters>[[:digit:]]+(?:-[[:digit:]]+|(?:\.[[:digit:]]+)+)?)/n => NumVal,
+          /\A%(?<base>b)(?<characters>[01]+(?:-[01]+|(?:\.[01]+)+)?)/n => NumVal,
+          /\A"(?<characters>[\x20-\x21\x23-\x7E]*)"/n => CharVal,
 
-          /\A(?<low>(?<high>[[:digit:]]+))(?!\*)/n => Token::Repeat,
-          /\A(?<low>[[:digit:]]*)\*(?<high>[[:digit:]]*)/n => Token::Repeat,
+          /\A(?<low>(?<high>[[:digit:]]+))(?!\*)/n => Repeat,
+          /\A(?<low>[[:digit:]]*)\*(?<high>[[:digit:]]*)/n => Repeat,
 
-          /\A\[#{C_WSP}*/n => Token::OptionStart,
-          /\A#{C_WSP}*\]/n => Token::OptionStop,
+          /\A\[#{C_WSP}*/n => OptionStart,
+          /\A#{C_WSP}*\]/n => OptionStop,
 
-          /\A\(#{C_WSP}*/n => Token::GroupStart,
-          /\A#{C_WSP}*\)/n => Token::GroupStop,
+          /\A\(#{C_WSP}*/n => GroupStart,
+          /\A#{C_WSP}*\)/n => GroupStop,
 
-          /\A[[:alpha:]][-[:alnum:]]*/n => Token::Rulename,
-          /\A#{C_WSP}*(?<operator>=\/?)#{C_WSP}*/n => Token::DefinedAs,
+          /\A[[:alpha:]][-[:alnum:]]*/n => Rulename,
+          /\A#{C_WSP}*(?<operator>=\/?)#{C_WSP}*/n => DefinedAs,
 
-          /\A#{C_WSP}*\/#{C_WSP}*/n => Token::AlternativeDelimiter,
+          /\A#{C_WSP}*\/#{C_WSP}*/n => AlternativeDelimiter,
 
-          /\A#{C_WSP}+/n => Token::C_WSP,
-          /\A#{C_NL}+/n => Token::C_NL,
+          /\A#{C_WSP}+/n => Parser::C_WSP,
+          /\A#{C_NL}+/n => Parser::C_NL,
         }
       end
     end
