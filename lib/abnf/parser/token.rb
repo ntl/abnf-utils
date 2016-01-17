@@ -20,12 +20,7 @@ module ABNF
           hash[name] = match[name]
         end
 
-        subclass = Lookup[type]
-        subclass.new abnf, captures
-      end
-
-      def self.inherited subclass
-        Lookup.add subclass
+        type.new abnf, captures
       end
     end
   end
