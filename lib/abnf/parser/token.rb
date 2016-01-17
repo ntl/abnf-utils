@@ -13,14 +13,14 @@ module ABNF
         end
       end
 
-      def self.build type, match
+      def self.build match
         abnf = match.to_s
 
         captures = match.names.each_with_object Hash.new do |name, hash|
           hash[name] = match[name]
         end
 
-        type.new abnf, captures
+        new abnf, captures
       end
     end
   end

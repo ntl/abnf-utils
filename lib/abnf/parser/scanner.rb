@@ -49,7 +49,7 @@ module ABNF
           match = pattern.match abnf
           next unless match
 
-          token = Token.build type, match
+          token = type.build match
           abnf = match.post_match
 
           return token, abnf
