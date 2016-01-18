@@ -14,6 +14,29 @@ module ABNF
           end
         end
 
+        def identifier
+          self.class.identifier
+        end
+
+        def self.identifier
+          @identifier ||=
+            begin
+              *, identifier = name.split '::'
+
+              identifier.gsub! /(?:\A|[a-z])[A-Z]/ do |part|
+                part.downcase!
+
+                if part.size == 1
+                  part
+                else
+                  part.insert 1, '-'
+                end
+              end
+
+              identifier
+            end
+        end
+
         def self.build match
           abnf = match.to_s
 

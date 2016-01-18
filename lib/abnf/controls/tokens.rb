@@ -54,8 +54,9 @@ module ABNF
         end
       end
 
-      Rulename = Value.define do
-        Parser::Tokens::Rulename.new 'some-rule', Hash.new
+      Rulename = Value.define do |value=nil|
+        value ||= 'some-rule'
+        Parser::Tokens::Rulename.new value, Hash.new
       end
     end
   end

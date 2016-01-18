@@ -6,6 +6,10 @@ module ABNF
           CharVal.value
         end
 
+        def self.foo
+          CharVal.value
+        end
+
         module NumVal
           def self.pair base, variant
             mod = const_get base
@@ -14,6 +18,22 @@ module ABNF
             token = mod.value
 
             return token.abnf, token
+          end
+
+          def self.range
+            ('A'..'Z')
+          end
+
+          def self.sequence
+            'foo'
+          end
+
+          def self.single
+            '!'
+          end
+
+          def self.value
+            HexVal::Sequence.value
           end
 
           module BinVal
@@ -99,8 +119,6 @@ module ABNF
 
           Parser::Tokens::ProseVal.new abnf, 'prose' => prose
         end
-
-        Terminal = CharVal
       end
     end
   end

@@ -140,22 +140,6 @@ context 'Scanner' do
     end
   end
 
-  test 'Full Rule' do
-    scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF::SingleTerminal.value
-
-    scanner.(abnf)
-
-    assert scanner do |scanner|
-      scanner.output? [
-        Controls::Tokens::Rulename.value,
-        Controls::Tokens::DefinedAs.value,
-        Controls::Tokens::TerminalElements.example,
-        Controls::Tokens::Newline.value,
-      ]
-    end
-  end
-
   test 'RFC 5234' do
     scanner = ABNF::Parser::Scanner.new
     abnf = Controls::ABNF::RFC5234.value
