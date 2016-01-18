@@ -1,7 +1,7 @@
 module ABNF
   module Controls
     module Tokens
-      module TerminalElements
+      module Terminal
         def self.example
           CharVal.value
         end

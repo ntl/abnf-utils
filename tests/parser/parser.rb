@@ -10,7 +10,7 @@ context 'Parser' do
       parser.([
         Controls::Tokens::Rulename.value('some-rule'),
         Controls::Tokens::DefinedAs.value,
-        Controls::Tokens::TerminalElements::ProseVal.value,
+        Controls::Tokens::Terminal::ProseVal.value,
         Controls::Tokens::Newline.value,
       ])
 
@@ -25,7 +25,7 @@ context 'Parser' do
       parser.([
         Controls::Tokens::Rulename.value,
         Controls::Tokens::DefinedAs.value,
-        Controls::Tokens::TerminalElements::CharVal.value,
+        Controls::Tokens::Terminal::CharVal.value,
         Controls::Tokens::Newline.value,
       ])
 
@@ -41,7 +41,7 @@ context 'Parser' do
         parser.([
           Controls::Tokens::Rulename.value,
           Controls::Tokens::DefinedAs.value,
-          Controls::Tokens::TerminalElements::NumVal::BinVal::Range.value,
+          Controls::Tokens::Terminal::NumVal::BinVal::Range.value,
           Controls::Tokens::Newline.value,
         ])
 
@@ -56,7 +56,7 @@ context 'Parser' do
         parser.([
           Controls::Tokens::Rulename.value,
           Controls::Tokens::DefinedAs.value,
-          Controls::Tokens::TerminalElements::NumVal::DecVal::Sequence.value,
+          Controls::Tokens::Terminal::NumVal::DecVal::Sequence.value,
           Controls::Tokens::Newline.value,
         ])
 
@@ -71,7 +71,7 @@ context 'Parser' do
         parser.([
           Controls::Tokens::Rulename.value,
           Controls::Tokens::DefinedAs.value,
-          Controls::Tokens::TerminalElements::NumVal::HexVal::Single.value,
+          Controls::Tokens::Terminal::NumVal::HexVal::Single.value,
           Controls::Tokens::Newline.value,
         ])
 

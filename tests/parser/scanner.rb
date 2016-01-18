@@ -6,7 +6,7 @@ context 'Scanner' do
       %w(Single Range Sequence).each do |variant|
         test "#{base} #{variant}" do
           scanner = ABNF::Parser::Scanner.new
-          abnf, token = Controls::Tokens::TerminalElements::NumVal.pair base, variant
+          abnf, token = Controls::Tokens::Terminal::NumVal.pair base, variant
 
           scanner.(abnf)
 
@@ -21,7 +21,7 @@ context 'Scanner' do
   test 'Character Values' do
     scanner = ABNF::Parser::Scanner.new
     abnf = Controls::ABNF::Terminal.char_val
-    token = Controls::Tokens::TerminalElements::CharVal.value
+    token = Controls::Tokens::Terminal::CharVal.value
 
     scanner.(abnf)
 
@@ -33,7 +33,7 @@ context 'Scanner' do
   test 'Prose Values' do
     scanner = ABNF::Parser::Scanner.new
     abnf = Controls::ABNF.prose_val
-    token = Controls::Tokens::TerminalElements::ProseVal.value
+    token = Controls::Tokens::Terminal::ProseVal.value
 
     scanner.(abnf)
 
