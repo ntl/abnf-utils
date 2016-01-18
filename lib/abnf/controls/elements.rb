@@ -2,7 +2,7 @@ module ABNF
   module Controls
     module Elements
       CharVal = Value.define do
-        abnf = Controls::ABNF::CharVal.value
+        abnf = Controls::ABNF.char_val
         characters = abnf[1...-1]
         Element::Terminal::Sequence.new abnf, characters
       end
@@ -10,20 +10,20 @@ module ABNF
 
       module NumVal
         Range = Value.define do
-          abnf = ABNF::NumVal::BinVal::Range.value
-          range = Tokens::TerminalElements::NumVal.range
+          abnf = ABNF::NumVal::BinVal.range
+          range = Values.character_range
           Element::Terminal::Range.new abnf, range
         end
 
         Sequence = Value.define do
-          abnf = ABNF::NumVal::DecVal::Sequence.value
-          characters = Tokens::TerminalElements::NumVal.sequence
+          abnf = ABNF::NumVal::DecVal.sequence
+          characters = Values.character_sequence
           Element::Terminal::Sequence.new abnf, characters
         end
 
         Single = Value.define do
-          abnf = ABNF::NumVal::HexVal::Single.value
-          characters = Tokens::TerminalElements::NumVal.single
+          abnf = ABNF::NumVal::HexVal.single
+          characters = Values.single_character
           Element::Terminal::Sequence.new abnf, characters
         end
       end

@@ -1,7 +1,7 @@
 require_relative './parser_tests_init'
 
 context 'Syntax Error' do
-  abnf = Controls::ABNF::BadSyntax.value
+  abnf = Controls::ABNF.bad_syntax
 
   test 'Message' do
     error = Parser::SyntaxError.build abnf

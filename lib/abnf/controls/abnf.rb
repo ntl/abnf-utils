@@ -1,32 +1,108 @@
 module ABNF
   module Controls
     module ABNF
-      AlternativeDelimiter = Value.define %{ / }
+      def self.alternative_delimiter
+        ' / '
+      end
 
-      BadSyntax = Value.define %{!invalid-abnf}
+      def self.bad_syntax
+        '!invalid-abnf'
+      end
 
-      CharVal = Value.define %{"foo"}
+      def self.char_val string=nil
+        string ||= 'foo'
+        %{"#{string}"}
+      end
 
-      GroupStart = Value.define %{( }
-      GroupStop = Value.define %{ )}
+      def self.group_start
+        '( '
+      end
+
+      def self.group_stop
+        ' )'
+      end
 
       module NumVal
+        def self.range base=nil
+          base ||= 16
+
+          first, *, last = Values.character_range.to_a
+
+          prefix, first, last = convert "#{first}#{last}", base
+
+          "%#{prefix}#{first}-#{last}"
+        end
+
+        def self.sequence base=nil
+          base ||= 16
+
+          character_sequence = Values.character_sequence
+
+          prefix, *character_codes = convert character_sequence, base
+
+          "%#{prefix}#{character_codes * '.'}"
+        end
+
+        def self.single base=nil
+          single_character = Values.single_character
+
+          prefix, character_code = convert single_character, base
+
+          "%#{prefix}#{character_code}"
+        end
+
+        def self.convert string, base
+          prefix = { 2 => 'b', 10 => 'd', 16 => 'x' }.fetch base
+
+          characters = string.unpack 'C*'
+
+          characters.map! do |character|
+            character.to_s base
+          end
+
+          return prefix, *characters
+        end
+
         module BinVal
-          Range = Value.define %{%b1000001-1011010}
-          Sequence = Value.define %{%b1100110.1101111.1101111}
-          Single = Value.define %{%b100001}
+          def self.range
+            NumVal.range 2
+          end
+
+          def self.sequence
+            NumVal.sequence 2
+          end
+
+          def self.single
+            NumVal.single 2
+          end
         end
 
         module DecVal
-          Range = Value.define %{%d65-90}
-          Sequence = Value.define %{%d102.111.111}
-          Single = Value.define %{%d33}
+          def self.range
+            NumVal.range 10
+          end
+
+          def self.sequence
+            NumVal.sequence 10
+          end
+
+          def self.single
+            NumVal.single 10
+          end
         end
 
         module HexVal
-          Range = Value.define %{%x41-5A}
-          Sequence = Value.define %{%x66.6F.6F}
-          Single = Value.define %{%x21}
+          def self.range
+            NumVal.range 16
+          end
+
+          def self.sequence
+            NumVal.sequence 16
+          end
+
+          def self.single
+            NumVal.single 16
+          end
         end
       end
 
@@ -45,7 +121,7 @@ module ABNF
         Range = Value.define %{1*2}
       end
 
-      SingleTerminal = Value.define %{some-rule = #{CharVal.value}\r\n}
+      SingleTerminal = Value.define %{some-rule = #{char_val}\r\n}
 
       Example = SingleTerminal
     end

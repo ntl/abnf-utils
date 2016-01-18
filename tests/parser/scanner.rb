@@ -20,7 +20,7 @@ context 'Scanner' do
 
   test 'Character Values' do
     scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF::CharVal.value
+    abnf = Controls::ABNF.char_val
     token = Controls::Tokens::TerminalElements::CharVal.value
 
     scanner.(abnf)
@@ -68,7 +68,7 @@ context 'Scanner' do
 
   test 'Start of Group' do
     scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF::GroupStart.value
+    abnf = Controls::ABNF.group_start
     token = Controls::Tokens::GroupStart.value
 
     scanner.(abnf)
@@ -80,7 +80,7 @@ context 'Scanner' do
 
   test 'Group Stop' do
     scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF::GroupStop.value
+    abnf = Controls::ABNF.group_stop
     token = Controls::Tokens::GroupStop.value
 
     scanner.(abnf)
@@ -130,7 +130,7 @@ context 'Scanner' do
 
   test 'Alternative Delimiter' do
     scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF::AlternativeDelimiter.value
+    abnf = Controls::ABNF.alternative_delimiter
     token = Controls::Tokens::AlternativeDelimiter.value
 
     scanner.(abnf)

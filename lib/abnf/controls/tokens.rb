@@ -2,7 +2,8 @@ module ABNF
   module Controls
     module Tokens
       AlternativeDelimiter = Value.define do
-        Parser::Tokens::AlternativeDelimiter.new ' / ', Hash.new
+        abnf = Controls::ABNF.alternative_delimiter
+        Parser::Tokens::AlternativeDelimiter.new abnf, Hash.new
       end
 
       Newline = Value.define do
@@ -24,12 +25,12 @@ module ABNF
       end
 
       GroupStart = Value.define do
-        abnf = Controls::ABNF::GroupStart.value
+        abnf = Controls::ABNF.group_start
         Parser::Tokens::GroupStart.new abnf, Hash.new
       end
 
       GroupStop = Value.define do
-        abnf = Controls::ABNF::GroupStop.value
+        abnf = Controls::ABNF.group_stop
         Parser::Tokens::GroupStop.new abnf, Hash.new
       end
 

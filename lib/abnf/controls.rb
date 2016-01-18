@@ -1,4 +1,5 @@
 require 'abnf/controls/value'
+require 'abnf/controls/values'
 
 require 'abnf/controls/abnf'
 require 'abnf/controls/abnf/rfc_5234'
