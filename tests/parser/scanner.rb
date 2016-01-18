@@ -20,8 +20,8 @@ context 'Scanner' do
 
   test 'Character Values' do
     scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF::Terminal.char_val
-    token = Controls::Tokens::Terminal::CharVal.value
+    token = Controls::Tokens::Terminal.char_val
+    abnf = token.abnf
 
     scanner.(abnf)
 
@@ -32,8 +32,8 @@ context 'Scanner' do
 
   test 'Prose Values' do
     scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF.prose_val
-    token = Controls::Tokens::Terminal::ProseVal.value
+    token = Controls::Tokens::Terminal.prose_val
+    abnf = token.abnf
 
     scanner.(abnf)
 

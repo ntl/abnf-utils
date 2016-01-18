@@ -10,7 +10,7 @@ context 'Parser' do
       parser.([
         Controls::Tokens::Rulename.value('some-rule'),
         Controls::Tokens::DefinedAs.value,
-        Controls::Tokens::Terminal::ProseVal.value,
+        Controls::Tokens::Terminal.prose_val,
         Controls::Tokens::Newline.value,
       ])
 
@@ -25,7 +25,7 @@ context 'Parser' do
       parser.([
         Controls::Tokens::Rulename.value,
         Controls::Tokens::DefinedAs.value,
-        Controls::Tokens::Terminal::CharVal.value,
+        Controls::Tokens::Terminal.char_val,
         Controls::Tokens::Newline.value,
       ])
 

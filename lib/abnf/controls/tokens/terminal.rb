@@ -3,11 +3,21 @@ module ABNF
     module Tokens
       module Terminal
         def self.example
-          CharVal.value
+          char_val
         end
 
-        def self.foo
-          CharVal.value
+        def self.char_val character_sequence=nil
+          character_sequence ||= Values::Terminal.character_sequence
+          abnf = Controls::ABNF::Terminal.char_val character_sequence
+
+          Parser::Tokens::CharVal.new abnf, 'characters' => character_sequence
+        end
+
+        def self.prose_val prose=nil
+          prose ||= Values::Terminal.prose
+          abnf = Controls::ABNF::Terminal.prose_val prose
+
+          Parser::Tokens::ProseVal.new abnf, 'prose' => prose
         end
 
         module NumVal
@@ -92,20 +102,6 @@ module ABNF
               Parser::Tokens::NumVal.new abnf, 'base' => 'x', 'characters' => characters
             end
           end
-        end
-
-        CharVal = Value.define do
-          abnf = Controls::ABNF::Terminal.char_val
-          characters = abnf[1...-1]
-
-          Parser::Tokens::CharVal.new abnf, 'characters' => characters
-        end
-
-        ProseVal = Value.define do
-          abnf = Controls::ABNF.prose_val
-          prose = Values::Terminal.prose
-
-          Parser::Tokens::ProseVal.new abnf, 'prose' => prose
         end
       end
     end

@@ -29,11 +29,6 @@ module ABNF
         ' ]'
       end
 
-      def self.prose_val prose=nil
-        prose ||= Values::Terminal.prose
-        "<#{prose}>"
-      end
-
       def self.rule rulename: nil, element: nil
         rulename ||= Values.rulename
         element ||= Values.terminal

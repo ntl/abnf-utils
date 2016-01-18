@@ -8,6 +8,12 @@ module ABNF
       end
       Terminal = CharVal
 
+      ProseVal = Value.define do
+        abnf = Controls::ABNF::Terminal.prose_val
+        prose = Values::Terminal.prose
+        Element::Terminal::ProseVal.new prose
+      end
+
       module NumVal
         Range = Value.define do
           abnf = ABNF::Terminal::NumVal::BinVal.range
@@ -26,12 +32,6 @@ module ABNF
           characters = Values::Terminal.single_character
           Element::Terminal::Sequence.new abnf, characters
         end
-      end
-
-      ProseVal = Value.define do
-        abnf = Controls::ABNF.prose_val
-        prose = Values::Terminal.prose
-        Element::Terminal::ProseVal.new prose
       end
     end
   end

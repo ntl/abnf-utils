@@ -6,9 +6,14 @@ module ABNF
           char_val
         end
 
-        def self.char_val string=nil
-          string ||= Values::Terminal.character_sequence
-          %{"#{string}"}
+        def self.char_val character_sequence=nil
+          character_sequence ||= Values::Terminal.character_sequence
+          %{"#{character_sequence}"}
+        end
+
+        def self.prose_val prose=nil
+          prose ||= Values::Terminal.prose
+          "<#{prose}>"
         end
 
         module NumVal
