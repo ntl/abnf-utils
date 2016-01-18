@@ -115,9 +115,9 @@ context 'Scanner' do
       end
     end
 
-    test 'Range' do
+    test 'Bounded Range' do
       scanner = ABNF::Parser::Scanner.new
-      abnf = Controls::ABNF::Repeat.range
+      abnf = Controls::ABNF::Repeat.bounded_range
       token = Controls::Tokens::Repeat::Range.value
 
       scanner.(abnf)

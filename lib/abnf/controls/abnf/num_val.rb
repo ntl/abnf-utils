@@ -44,35 +44,35 @@ module ABNF
           end
         end
 
-        def self.range base=nil
+        def self.range base=nil, character_range: nil
           base ||= 16
+          character_range ||= Values::Terminal.character_range
 
-          first, *, last = Values::Terminal.character_range.to_a
+          first, *, last = character_range.to_a
 
           prefix, first, last = convert "#{first}#{last}", base
 
           "%#{prefix}#{first}-#{last}"
         end
 
-        def self.sequence base=nil
+        def self.sequence base=nil, character_sequence: nil
           base ||= 16
-
-          character_sequence = Values::Terminal.character_sequence
+          character_sequence ||= Values::Terminal.character_sequence
 
           prefix, *character_codes = convert character_sequence, base
 
           "%#{prefix}#{character_codes * '.'}"
         end
 
-        def self.single base=nil
-          single_character = Values::Terminal.single_character
+        def self.single base=nil, character: nil
+          character = Values::Terminal.single_character
 
-          prefix, character_code = convert single_character, base
+          prefix, character_code = convert character, base
 
           "%#{prefix}#{character_code}"
         end
 
-        def self.value
+        def self.example
           sequence
         end
 

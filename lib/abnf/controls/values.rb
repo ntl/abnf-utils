@@ -22,10 +22,14 @@ module ABNF
       end
 
       def self.terminal
-        Terminal.value
+        Terminal.example
       end
 
       module Terminal
+        def self.example
+          character_sequence
+        end
+
         def self.character_range
           ('A'..'Z')
         end
@@ -41,14 +45,10 @@ module ABNF
         def self.single_character
           '#'
         end
-
-        def self.value
-          character_sequence
-        end
       end
 
       module Repetition
-        def self.value
+        def self.example
           any
         end
 
@@ -60,7 +60,7 @@ module ABNF
           2
         end
 
-        def self.range
+        def self.bounded_range
           (1..2)
         end
       end

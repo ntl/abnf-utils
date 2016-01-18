@@ -23,7 +23,7 @@ module ABNF
       end
 
       def self.num_val
-        NumVal.value
+        NumVal.example
       end
 
       def self.option_start
@@ -34,19 +34,20 @@ module ABNF
         ' ]'
       end
 
-      def self.prose_val
-        "<#{Values::Terminal.prose}>"
+      def self.prose_val prose=nil
+        prose ||= Values::Terminal.prose
+        "<#{prose}>"
       end
 
-      def self.rule
-        rulename = Values.rulename
-        terminal = Values.terminal
+      def self.rule rulename: nil, element: nil
+        rulename ||= Values.rulename
+        element ||= Values.terminal
 
-        "#{rulename} = #{terminal}\r\n"
+        "#{rulename} = #{element}\r\n"
       end
 
       module Repeat
-        def self.value
+        def self.example
           any
         end
 
@@ -54,14 +55,14 @@ module ABNF
           '*'
         end
 
-        def self.fixed
-          fixed_repetition_count = Values::Repetition.fixed
-          fixed_repetition_count.to_s
+        def self.fixed count=nil
+          count ||= Values::Repetition.fixed
+          count.to_s
         end
 
-        def self.range
-          repetition_range = Values::Repetition.range
-          "#{repetition_range.first}*#{repetition_range.last}"
+        def self.bounded_range range=nil
+          range ||= Values::Repetition.bounded_range
+          "#{range.first}*#{range.last}"
         end
       end
     end

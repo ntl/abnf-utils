@@ -50,7 +50,7 @@ module ABNF
         end
 
         Range = Value.define do
-          abnf = Controls::ABNF::Repeat.range
+          abnf = Controls::ABNF::Repeat.bounded_range
           Parser::Tokens::Repeat.new abnf, 'low' => '1', 'high' => '2'
         end
       end
