@@ -1,8 +1,11 @@
 require 'abnf/controls/value'
 require 'abnf/controls/values'
+require 'abnf/controls/values/terminal'
+require 'abnf/controls/values/repetition'
 
 require 'abnf/controls/abnf'
-require 'abnf/controls/abnf/num_val'
+require 'abnf/controls/abnf/repeat'
+require 'abnf/controls/abnf/terminal'
 require 'abnf/controls/abnf/rfc_5234'
 require 'abnf/controls/elements'
 require 'abnf/controls/tokens'

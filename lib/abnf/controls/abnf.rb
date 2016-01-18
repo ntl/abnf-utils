@@ -9,11 +9,6 @@ module ABNF
         '!invalid-abnf'
       end
 
-      def self.char_val string=nil
-        string ||= Values::Terminal.character_sequence
-        %{"#{string}"}
-      end
-
       def self.group_start
         '( '
       end
@@ -22,8 +17,8 @@ module ABNF
         ' )'
       end
 
-      def self.num_val
-        NumVal.example
+      def self.terminal
+        Terminal.example
       end
 
       def self.option_start
@@ -44,26 +39,6 @@ module ABNF
         element ||= Values.terminal
 
         "#{rulename} = #{element}\r\n"
-      end
-
-      module Repeat
-        def self.example
-          any
-        end
-
-        def self.any
-          '*'
-        end
-
-        def self.fixed count=nil
-          count ||= Values::Repetition.fixed
-          count.to_s
-        end
-
-        def self.bounded_range range=nil
-          range ||= Values::Repetition.bounded_range
-          "#{range.first}*#{range.last}"
-        end
       end
     end
   end
