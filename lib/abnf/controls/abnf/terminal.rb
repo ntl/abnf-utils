@@ -18,48 +18,48 @@ module ABNF
 
         module NumVal
           module BinVal
-            def self.range
-              NumVal.range 2
+            def self.range character_range=nil
+              NumVal.range character_range, base: 2
             end
 
-            def self.sequence
-              NumVal.sequence 2
+            def self.sequence character_sequence=nil
+              NumVal.sequence character_sequence, base: 2
             end
 
-            def self.single
-              NumVal.single 2
+            def self.single character=nil
+              NumVal.single character, base: 2
             end
           end
 
           module DecVal
-            def self.range
-              NumVal.range 10
+            def self.range character_range=nil
+              NumVal.range character_range, base: 10
             end
 
-            def self.sequence
-              NumVal.sequence 10
+            def self.sequence character_sequence=nil
+              NumVal.sequence character_sequence, base: 10
             end
 
-            def self.single
-              NumVal.single 10
+            def self.single character=nil
+              NumVal.single character, base: 10
             end
           end
 
           module HexVal
-            def self.range
-              NumVal.range 16
+            def self.range character_range=nil
+              NumVal.range character_range, base: 16
             end
 
-            def self.sequence
-              NumVal.sequence 16
+            def self.sequence character_sequence=nil
+              NumVal.sequence character_sequence, base: 16
             end
 
-            def self.single
-              NumVal.single 16
+            def self.single character=nil
+              NumVal.single character, base: 16
             end
           end
 
-          def self.range base=nil, character_range: nil
+          def self.range character_range=nil, base: nil
             base ||= 16
             character_range ||= Values::Terminal.character_range
 
@@ -70,7 +70,7 @@ module ABNF
             "%#{prefix}#{first}-#{last}"
           end
 
-          def self.sequence base=nil, character_sequence: nil
+          def self.sequence character_sequence=nil, base: nil
             base ||= 16
             character_sequence ||= Values::Terminal.character_sequence
 
@@ -79,7 +79,7 @@ module ABNF
             "%#{prefix}#{character_codes * '.'}"
           end
 
-          def self.single base=nil, character: nil
+          def self.single character=nil, base: nil
             character ||= Values::Terminal.single_character
 
             prefix, character_code = convert character, base

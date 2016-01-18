@@ -3,10 +3,13 @@ require_relative './parser_tests_init'
 context 'Scanner' do
   context 'Numeric Values' do
     %w(BinVal DecVal HexVal).each do |base|
-      %w(Single Range Sequence).each do |variant|
+      %w(Single Sequence Range).each do |variant|
+        method_name = variant.downcase
+
         test "#{base} #{variant}" do
           scanner = ABNF::Parser::Scanner.new
-          abnf, token = Controls::Tokens::Terminal::NumVal.pair base, variant
+          token = Controls::Tokens::Terminal::NumVal.get base, method_name
+          abnf = token.abnf
 
           scanner.(abnf)
 
