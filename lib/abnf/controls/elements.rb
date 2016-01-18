@@ -11,26 +11,26 @@ module ABNF
       module NumVal
         Range = Value.define do
           abnf = ABNF::NumVal::BinVal.range
-          range = Values.character_range
+          range = Values::Terminal.character_range
           Element::Terminal::Range.new abnf, range
         end
 
         Sequence = Value.define do
           abnf = ABNF::NumVal::DecVal.sequence
-          characters = Values.character_sequence
+          characters = Values::Terminal.character_sequence
           Element::Terminal::Sequence.new abnf, characters
         end
 
         Single = Value.define do
           abnf = ABNF::NumVal::HexVal.single
-          characters = Values.single_character
+          characters = Values::Terminal.single_character
           Element::Terminal::Sequence.new abnf, characters
         end
       end
 
       ProseVal = Value.define do
-        abnf = Controls::ABNF::ProseVal.value
-        prose = abnf[1...-1]
+        abnf = Controls::ABNF.prose_val
+        prose = Values::Terminal.prose
         Element::Terminal::ProseVal.new prose
       end
     end

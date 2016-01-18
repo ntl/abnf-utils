@@ -10,7 +10,7 @@ module ABNF
       end
 
       def self.char_val string=nil
-        string ||= 'foo'
+        string ||= Values::Terminal.character_sequence
         %{"#{string}"}
       end
 
@@ -22,24 +22,48 @@ module ABNF
         ' )'
       end
 
-      OptionStart = Value.define %{[ }
-      OptionStop = Value.define %{ ]}
+      def self.num_val
+        NumVal.value
+      end
 
-      ProseVal = Value.define %{<Some Prose>}
+      def self.option_start
+        '[ '
+      end
+
+      def self.option_stop
+        ' ]'
+      end
+
+      def self.prose_val
+        "<#{Values::Terminal.prose}>"
+      end
+
+      def self.rule
+        rulename = Values.rulename
+        terminal = Values.terminal
+
+        "#{rulename} = #{terminal}\r\n"
+      end
 
       module Repeat
         def self.value
-          Any.value
+          any
         end
 
-        Any = Value.define %{*}
-        Fixed = Value.define %{1}
-        Range = Value.define %{1*2}
+        def self.any
+          '*'
+        end
+
+        def self.fixed
+          fixed_repetition_count = Values::Repetition.fixed
+          fixed_repetition_count.to_s
+        end
+
+        def self.range
+          repetition_range = Values::Repetition.range
+          "#{repetition_range.first}*#{repetition_range.last}"
+        end
       end
-
-      SingleTerminal = Value.define %{some-rule = #{char_val}\r\n}
-
-      Example = SingleTerminal
     end
   end
 end

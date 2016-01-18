@@ -47,7 +47,7 @@ module ABNF
         def self.range base=nil
           base ||= 16
 
-          first, *, last = Values.character_range.to_a
+          first, *, last = Values::Terminal.character_range.to_a
 
           prefix, first, last = convert "#{first}#{last}", base
 
@@ -57,7 +57,7 @@ module ABNF
         def self.sequence base=nil
           base ||= 16
 
-          character_sequence = Values.character_sequence
+          character_sequence = Values::Terminal.character_sequence
 
           prefix, *character_codes = convert character_sequence, base
 
@@ -65,11 +65,15 @@ module ABNF
         end
 
         def self.single base=nil
-          single_character = Values.single_character
+          single_character = Values::Terminal.single_character
 
           prefix, character_code = convert single_character, base
 
           "%#{prefix}#{character_code}"
+        end
+
+        def self.value
+          sequence
         end
 
         def self.convert string, base

@@ -102,8 +102,8 @@ module ABNF
         end
 
         ProseVal = Value.define do
-          abnf = Controls::ABNF::ProseVal.value
-          prose = abnf[1...-1]
+          abnf = Controls::ABNF.prose_val
+          prose = Values::Terminal.prose
 
           Parser::Tokens::ProseVal.new abnf, 'prose' => prose
         end

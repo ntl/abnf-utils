@@ -15,12 +15,12 @@ module ABNF
       end
 
       OptionStart = Value.define do
-        abnf = Controls::ABNF::OptionStart.value
+        abnf = Controls::ABNF.option_start
         Parser::Tokens::OptionStart.new abnf, Hash.new
       end
 
       OptionStop = Value.define do
-        abnf = Controls::ABNF::OptionStop.value
+        abnf = Controls::ABNF.option_stop
         Parser::Tokens::OptionStop.new abnf, Hash.new
       end
 
@@ -40,17 +40,17 @@ module ABNF
         end
 
         Any = Value.define do
-          abnf = Controls::ABNF::Repeat::Any.value
+          abnf = Controls::ABNF::Repeat.any
           Parser::Tokens::Repeat.new abnf, 'low' => '', 'high' => ''
         end
 
         Fixed = Value.define do
-          abnf = Controls::ABNF::Repeat::Fixed.value
-          Parser::Tokens::Repeat.new abnf, 'low' => '1', 'high' => '1'
+          abnf = Controls::ABNF::Repeat.fixed
+          Parser::Tokens::Repeat.new abnf, 'low' => '2', 'high' => '2'
         end
 
         Range = Value.define do
-          abnf = Controls::ABNF::Repeat::Range.value
+          abnf = Controls::ABNF::Repeat.range
           Parser::Tokens::Repeat.new abnf, 'low' => '1', 'high' => '2'
         end
       end

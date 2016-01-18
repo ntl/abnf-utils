@@ -32,7 +32,7 @@ context 'Scanner' do
 
   test 'Prose Values' do
     scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF::ProseVal.value
+    abnf = Controls::ABNF.prose_val
     token = Controls::Tokens::TerminalElements::ProseVal.value
 
     scanner.(abnf)
@@ -44,7 +44,7 @@ context 'Scanner' do
 
   test 'Start of Option' do
     scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF::OptionStart.value
+    abnf = Controls::ABNF.option_start
     token = Controls::Tokens::OptionStart.value
 
     scanner.(abnf)
@@ -56,7 +56,7 @@ context 'Scanner' do
 
   test 'Option Stop' do
     scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF::OptionStop.value
+    abnf = Controls::ABNF.option_stop
     token = Controls::Tokens::OptionStop.value
 
     scanner.(abnf)
@@ -93,7 +93,7 @@ context 'Scanner' do
   context 'Repeat' do
     test 'Any' do
       scanner = ABNF::Parser::Scanner.new
-      abnf = Controls::ABNF::Repeat::Any.value
+      abnf = Controls::ABNF::Repeat.any
       token = Controls::Tokens::Repeat::Any.value
 
       scanner.(abnf)
@@ -105,7 +105,7 @@ context 'Scanner' do
 
     test 'Fixed' do
       scanner = ABNF::Parser::Scanner.new
-      abnf = Controls::ABNF::Repeat::Fixed.value
+      abnf = Controls::ABNF::Repeat.fixed
       token = Controls::Tokens::Repeat::Fixed.value
 
       scanner.(abnf)
@@ -117,7 +117,7 @@ context 'Scanner' do
 
     test 'Range' do
       scanner = ABNF::Parser::Scanner.new
-      abnf = Controls::ABNF::Repeat::Range.value
+      abnf = Controls::ABNF::Repeat.range
       token = Controls::Tokens::Repeat::Range.value
 
       scanner.(abnf)
