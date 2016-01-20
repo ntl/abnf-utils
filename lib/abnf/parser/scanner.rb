@@ -79,20 +79,23 @@ module ABNF
       end
 
       module Assertions
-        def output? expected_tokens
-          expected_tokens = [expected_tokens] unless expected_tokens.is_a? Array
-
-          actual_tokens = token_stream.last expected_tokens.size
-
-          actual_tokens == expected_tokens
-        end
-
         def scanned? expected_abnf
-          abnf_per_token = token_stream.map &:abnf
-
-          actual_abnf = abnf_per_token.join
+          actual_abnf = token_stream.map &:abnf
+          actual_abnf *= ''
 
           actual_abnf == expected_abnf
+        end
+
+        # Returns true if an equivalent copy of the input token is created as
+        # the result of scanning its ABNF grammar.
+        def token_rescannable? expected_token
+          abnf = expected_token.abnf
+
+          self.(abnf)
+
+          actual_token = token_stream.last
+
+          actual_token == expected_token
         end
       end
     end

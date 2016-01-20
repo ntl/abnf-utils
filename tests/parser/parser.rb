@@ -8,10 +8,10 @@ context 'Parser' do
       parser.rule_list = rule_list
 
       parser.([
-        Controls::Tokens::Rulename.value('some-rule'),
-        Controls::Tokens::DefinedAs.value,
+        Controls::Tokens.rulename,
+        Controls::Tokens.assignment,
         Controls::Tokens::Terminal.prose_val,
-        Controls::Tokens::Newline.value,
+        Controls::Tokens.newline,
       ])
 
       assert rule_list['some-rule'].element == Controls::Elements::ProseVal.value
@@ -23,10 +23,10 @@ context 'Parser' do
       parser.rule_list = rule_list
 
       parser.([
-        Controls::Tokens::Rulename.value,
-        Controls::Tokens::DefinedAs.value,
+        Controls::Tokens.rulename,
+        Controls::Tokens.assignment,
         Controls::Tokens::Terminal.char_val,
-        Controls::Tokens::Newline.value,
+        Controls::Tokens.newline,
       ])
 
       assert rule_list['some-rule'].element == Controls::Elements::CharVal.value
@@ -39,10 +39,10 @@ context 'Parser' do
         parser.rule_list = rule_list
 
         parser.([
-          Controls::Tokens::Rulename.value,
-          Controls::Tokens::DefinedAs.value,
+          Controls::Tokens.rulename,
+          Controls::Tokens.assignment,
           Controls::Tokens::Terminal::NumVal::BinVal.range,
-          Controls::Tokens::Newline.value,
+          Controls::Tokens.newline,
         ])
 
         assert rule_list['some-rule'].element == Controls::Elements::NumVal::Range.value
@@ -54,10 +54,10 @@ context 'Parser' do
         parser.rule_list = rule_list
 
         parser.([
-          Controls::Tokens::Rulename.value,
-          Controls::Tokens::DefinedAs.value,
+          Controls::Tokens.rulename,
+          Controls::Tokens.assignment,
           Controls::Tokens::Terminal::NumVal::DecVal.sequence,
-          Controls::Tokens::Newline.value,
+          Controls::Tokens.newline,
         ])
 
         assert rule_list['some-rule'].element == Controls::Elements::NumVal::Sequence.value
@@ -69,10 +69,10 @@ context 'Parser' do
         parser.rule_list = rule_list
 
         parser.([
-          Controls::Tokens::Rulename.value,
-          Controls::Tokens::DefinedAs.value,
+          Controls::Tokens.rulename,
+          Controls::Tokens.assignment,
           Controls::Tokens::Terminal::NumVal::HexVal.single,
-          Controls::Tokens::Newline.value,
+          Controls::Tokens.newline,
         ])
 
         assert rule_list['some-rule'].element == Controls::Elements::NumVal::Single.value

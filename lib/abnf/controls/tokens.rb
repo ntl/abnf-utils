@@ -1,63 +1,63 @@
 module ABNF
   module Controls
     module Tokens
-      AlternativeDelimiter = Value.define do
+      def self.alternative_delimiter
         abnf = Controls::ABNF.alternative_delimiter
         Parser::Tokens::AlternativeDelimiter.new abnf, Hash.new
       end
 
-      Newline = Value.define do
+      def self.newline
         Parser::Tokens::Newline.new "\r\n", Hash.new
       end
 
-      DefinedAs = Value.define do
+      def self.assignment
         Parser::Tokens::DefinedAs.new ' = ', 'operator' => '='
       end
 
-      OptionStart = Value.define do
+      def self.option_start
         abnf = Controls::ABNF.option_start
         Parser::Tokens::OptionStart.new abnf, Hash.new
       end
 
-      OptionStop = Value.define do
+      def self.option_stop
         abnf = Controls::ABNF.option_stop
         Parser::Tokens::OptionStop.new abnf, Hash.new
       end
 
-      GroupStart = Value.define do
+      def self.group_start
         abnf = Controls::ABNF.group_start
         Parser::Tokens::GroupStart.new abnf, Hash.new
       end
 
-      GroupStop = Value.define do
+      def self.group_stop
         abnf = Controls::ABNF.group_stop
         Parser::Tokens::GroupStop.new abnf, Hash.new
       end
 
+      def self.rulename
+        value = 'some-rule'
+        Parser::Tokens::Rulename.new value, Hash.new
+      end
+
       module Repeat
-        def self.value
-          Any.value
+        def self.example
+          any
         end
 
-        Any = Value.define do
+        def self.any
           abnf = Controls::ABNF::Repeat.any
           Parser::Tokens::Repeat.new abnf, 'low' => '', 'high' => ''
         end
 
-        Fixed = Value.define do
+        def self.fixed
           abnf = Controls::ABNF::Repeat.fixed
           Parser::Tokens::Repeat.new abnf, 'low' => '2', 'high' => '2'
         end
 
-        Range = Value.define do
+        def self.bounded_range
           abnf = Controls::ABNF::Repeat.bounded_range
           Parser::Tokens::Repeat.new abnf, 'low' => '1', 'high' => '2'
         end
-      end
-
-      Rulename = Value.define do |value=nil|
-        value ||= 'some-rule'
-        Parser::Tokens::Rulename.new value, Hash.new
       end
     end
   end

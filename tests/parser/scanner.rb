@@ -1,20 +1,18 @@
 require_relative './parser_tests_init'
 
 context 'Scanner' do
+  scanner = ABNF::Parser::Scanner.new
+
   context 'Numeric Values' do
     %w(BinVal DecVal HexVal).each do |base|
       %w(Single Sequence Range).each do |variant|
         method_name = variant.downcase
 
         test "#{base} #{variant}" do
-          scanner = ABNF::Parser::Scanner.new
           token = Controls::Tokens::Terminal::NumVal.get base, method_name
-          abnf = token.abnf
-
-          scanner.(abnf)
 
           assert scanner do |scanner|
-            scanner.output? token
+            scanner.token_rescannable? token
           end
         end
       end
@@ -22,124 +20,100 @@ context 'Scanner' do
   end
 
   test 'Character Values' do
-    scanner = ABNF::Parser::Scanner.new
     token = Controls::Tokens::Terminal.char_val
-    abnf = token.abnf
-
-    scanner.(abnf)
 
     assert scanner do |scanner|
-      scanner.output? token
+      scanner.token_rescannable? token
     end
   end
 
   test 'Prose Values' do
-    scanner = ABNF::Parser::Scanner.new
     token = Controls::Tokens::Terminal.prose_val
-    abnf = token.abnf
-
-    scanner.(abnf)
 
     assert scanner do |scanner|
-      scanner.output? token
+      scanner.token_rescannable? token
     end
   end
 
   test 'Start of Option' do
-    scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF.option_start
-    token = Controls::Tokens::OptionStart.value
-
-    scanner.(abnf)
+    token = Controls::Tokens.option_start
 
     assert scanner do |scanner|
-      scanner.output? token
+      scanner.token_rescannable? token
     end
   end
 
   test 'Option Stop' do
-    scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF.option_stop
-    token = Controls::Tokens::OptionStop.value
-
-    scanner.(abnf)
+    token = Controls::Tokens.option_stop
 
     assert scanner do |scanner|
-      scanner.output? token
+      scanner.token_rescannable? token
     end
   end
 
   test 'Start of Group' do
-    scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF.group_start
-    token = Controls::Tokens::GroupStart.value
-
-    scanner.(abnf)
+    token = Controls::Tokens.group_start
 
     assert scanner do |scanner|
-      scanner.output? token
+      scanner.token_rescannable? token
     end
   end
 
   test 'Group Stop' do
-    scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF.group_stop
-    token = Controls::Tokens::GroupStop.value
-
-    scanner.(abnf)
+    token = Controls::Tokens.group_stop
 
     assert scanner do |scanner|
-      scanner.output? token
+      scanner.token_rescannable? token
     end
   end
 
   context 'Repeat' do
     test 'Any' do
-      scanner = ABNF::Parser::Scanner.new
-      abnf = Controls::ABNF::Repeat.any
-      token = Controls::Tokens::Repeat::Any.value
-
-      scanner.(abnf)
+      token = Controls::Tokens::Repeat.any
 
       assert scanner do |scanner|
-        scanner.output? token
+        scanner.token_rescannable? token
       end
     end
 
     test 'Fixed' do
-      scanner = ABNF::Parser::Scanner.new
-      abnf = Controls::ABNF::Repeat.fixed
-      token = Controls::Tokens::Repeat::Fixed.value
-
-      scanner.(abnf)
+      token = Controls::Tokens::Repeat.fixed
 
       assert scanner do |scanner|
-        scanner.output? token
+        scanner.token_rescannable? token
       end
     end
 
     test 'Bounded Range' do
-      scanner = ABNF::Parser::Scanner.new
-      abnf = Controls::ABNF::Repeat.bounded_range
-      token = Controls::Tokens::Repeat::Range.value
-
-      scanner.(abnf)
+      token = Controls::Tokens::Repeat.bounded_range
 
       assert scanner do |scanner|
-        scanner.output? token
+        scanner.token_rescannable? token
       end
     end
   end
 
   test 'Alternative Delimiter' do
-    scanner = ABNF::Parser::Scanner.new
-    abnf = Controls::ABNF.alternative_delimiter
-    token = Controls::Tokens::AlternativeDelimiter.value
-
-    scanner.(abnf)
+    token = Controls::Tokens.alternative_delimiter
 
     assert scanner do |scanner|
-      scanner.output? token
+      scanner.token_rescannable? token
+    end
+  end
+
+  test 'Newline' do
+    token = Controls::Tokens.newline
+
+    assert scanner do |scanner|
+      scanner.token_rescannable? token
+    end
+  end
+
+  test 'Assignment' do
+    token = Controls::Tokens.assignment
+
+    assert scanner do |scanner|
+      scanner.token_rescannable? token
     end
   end
 
