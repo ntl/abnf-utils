@@ -45,18 +45,54 @@ module ABNF
       end
 
       def alternation
-        concatenation
+        abnf = String.new
+        elements = []
+
+        loop do
+          next_element = concatenation
+
+          abnf << next_element.abnf
+          elements << next_element
+
+          delimiter = accept 'alternative-delimiter'
+
+          if delimiter
+            abnf << delimiter.abnf
+          else
+            break
+          end
+        end
+
+        if elements.size == 1
+          elements[0]
+        else
+          Element::Alternation.new abnf, elements
+        end
       end
 
       def concatenation
-        element = repetition
+        abnf = String.new
+        elements = []
 
-        if accept 'whitespace'
-          elements = [element]
-          fail # XXX
-          repetition
+        loop do
+          next_element = repetition
+
+          abnf << next_element.abnf
+          elements << next_element
+
+          whitespace = accept 'whitespace'
+
+          if whitespace
+            abnf << whitespace.abnf
+          else
+            break
+          end
+        end
+
+        if elements.size == 1
+          elements[0]
         else
-          element
+          Element::Concatenation.new abnf, elements
         end
       end
 

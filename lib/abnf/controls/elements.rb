@@ -1,6 +1,32 @@
 module ABNF
   module Controls
     module Elements
+      def self.alternation elements=nil
+        abnf = String.new
+
+        elements ||= Values.alternation.map do |string|
+          Terminal.char_val string
+        end
+
+        delimiter = Controls::ABNF.alternative_delimiter
+        abnf = elements.map(&:abnf) * delimiter
+
+        Element::Alternation.new abnf, elements
+      end
+
+      def self.concatenation elements=nil
+        abnf = String.new
+
+        elements ||= Values.concatenation.map do |string|
+          Terminal.char_val string
+        end
+
+        whitespace = Controls::ABNF.whitespace
+        abnf = elements.map(&:abnf) * whitespace
+
+        Element::Concatenation.new abnf, elements
+      end
+
       def self.group element=nil
         element ||= Terminal.char_val
 

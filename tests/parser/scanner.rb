@@ -93,6 +93,25 @@ context 'Scanner' do
     end
   end
 
+  context 'Whitespace' do
+    test 'Single Space' do
+      whitespace = Controls::Values.whitespace
+      token = Controls::Tokens.whitespace whitespace
+
+      assert scanner do |scanner|
+        scanner.token_rescannable? token
+      end
+    end
+
+    test 'Comments' do
+      token = Controls::Tokens.whitespace " ; some-comment\r\n "
+
+      assert scanner do |scanner|
+        scanner.token_rescannable? token
+      end
+    end
+  end
+
   test 'Alternative Delimiter' do
     token = Controls::Tokens.alternative_delimiter
 

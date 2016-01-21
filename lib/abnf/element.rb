@@ -11,6 +11,12 @@ module ABNF
       end
     end
 
+    class Alternation < Struct.new :abnf, :elements
+    end
+
+    class Concatenation < Struct.new :abnf, :elements
+    end
+
     class Repetition < Struct.new :abnf, :range, :element
     end
   end

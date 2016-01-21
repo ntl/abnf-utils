@@ -35,6 +35,10 @@ module ABNF
 
         "#{rulename} = #{element}\r\n"
       end
+
+      def self.whitespace
+        Values.whitespace
+      end
     end
   end
 end

@@ -24,6 +24,10 @@ module ABNF
       def self.terminal
         Terminal.example
       end
+
+      def self.whitespace
+        ' '
+      end
     end
   end
 end

@@ -49,6 +49,11 @@ module ABNF
         value = 'some-rule'
         Parser::Tokens::Rulename.new value, Hash.new
       end
+
+      def self.whitespace whitespace=nil
+        whitespace ||= Controls::ABNF.whitespace
+        Parser::Tokens::Whitespace.new whitespace, Hash.new
+      end
     end
   end
 end
