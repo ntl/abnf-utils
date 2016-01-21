@@ -6,7 +6,7 @@ module ABNF
           any
         end
 
-        def self.any
+        def self.any_number
           (0..Float::INFINITY)
         end
 

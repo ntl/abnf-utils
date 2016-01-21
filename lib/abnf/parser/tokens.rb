@@ -74,6 +74,21 @@ module ABNF
       end
 
       class Repeat < Token
+        def maximum
+          if captures['maximum'].empty?
+            Float::INFINITY
+          else
+            captures['maximum'].to_i
+          end
+        end
+
+        def minimum
+          captures['minimum'].to_i
+        end
+
+        def range
+          (minimum..maximum)
+        end
       end
 
       class Rulename < Token

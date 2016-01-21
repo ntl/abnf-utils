@@ -51,31 +51,51 @@ context 'Recursive Descent Parser' do
         compiler.defined_rule? rule_name, Controls::Elements::Terminal.char_val
       end
     end
+  end
 
-    test 'Option' do
-      tokens = Controls::Tokens.rule(
-        Controls::Tokens.option_start,
-        Controls::Tokens::Terminal.char_val,
-        Controls::Tokens.option_stop,
-      )
+  test 'Option' do
+    tokens = Controls::Tokens.rule(
+      Controls::Tokens.option_start,
+      Controls::Tokens::Terminal.char_val,
+      Controls::Tokens.option_stop,
+    )
 
-      compiler = ABNF::Parser::Compiler.build tokens
+    compiler = ABNF::Parser::Compiler.build tokens
 
-      compiler.()
+    compiler.()
 
-      assert compiler do |compiler|
-        terminal_element = Controls::Elements::Terminal.char_val
-        optional_element = Controls::Elements.optional terminal_element
+    assert compiler do |compiler|
+      terminal_element = Controls::Elements::Terminal.char_val
+      optional_element = Controls::Elements.optional terminal_element
 
-        compiler.defined_rule? rule_name, optional_element
-      end
+      compiler.defined_rule? rule_name, optional_element
     end
+  end
 
-    test 'Group' do
+  test 'Group' do
+    tokens = Controls::Tokens.rule(
+      Controls::Tokens.group_start,
+      Controls::Tokens::Terminal.example,
+      Controls::Tokens.group_stop,
+    )
+
+    compiler = ABNF::Parser::Compiler.build tokens
+
+    compiler.()
+
+    assert compiler do |compiler|
+      terminal_element = Controls::Elements::Terminal.example
+      group_element = Controls::Elements.group terminal_element
+
+      compiler.defined_rule? rule_name, group_element
+    end
+  end
+
+  context 'Repetition' do
+    test 'Any Number' do
       tokens = Controls::Tokens.rule(
-        Controls::Tokens.group_start,
-        Controls::Tokens::Terminal.char_val,
-        Controls::Tokens.group_stop,
+        Controls::Tokens::Repeat.any_number,
+        Controls::Tokens::Terminal.example,
       )
 
       compiler = ABNF::Parser::Compiler.build tokens
@@ -83,10 +103,10 @@ context 'Recursive Descent Parser' do
       compiler.()
 
       assert compiler do |compiler|
-        terminal_element = Controls::Elements::Terminal.char_val
-        group_element = Controls::Elements.group terminal_element
+        terminal_element = Controls::Elements::Terminal.example
+        repetition_element = Controls::Elements::Repetition.any_number terminal_element
 
-        compiler.defined_rule? rule_name, group_element
+        compiler.defined_rule? rule_name, repetition_element
       end
     end
   end

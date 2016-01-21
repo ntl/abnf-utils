@@ -3,10 +3,10 @@ module ABNF
     module ABNF
       module Repeat
         def self.example
-          any
+          any_number
         end
 
-        def self.any
+        def self.any_number
           '*'
         end
 

@@ -17,8 +17,8 @@ module ABNF
           /\A%(?<base>b)(?<characters>[01]+(?:-[01]+|(?:\.[01]+)+)?)/n => Tokens::NumVal,
           /\A"(?<characters>[\x20-\x21\x23-\x7E]*)"/n => Tokens::CharVal,
 
-          /\A(?<low>(?<high>[[:digit:]]+))(?!\*)/n => Tokens::Repeat,
-          /\A(?<low>[[:digit:]]*)\*(?<high>[[:digit:]]*)/n => Tokens::Repeat,
+          /\A(?<minimum>(?<maximum>[[:digit:]]+))(?!\*)/n => Tokens::Repeat,
+          /\A(?<minimum>[[:digit:]]*)\*(?<maximum>[[:digit:]]*)/n => Tokens::Repeat,
 
           /\A\[#{C_WSP}*/n => Tokens::OptionStart,
           /\A#{C_WSP}*\]/n => Tokens::OptionStop,

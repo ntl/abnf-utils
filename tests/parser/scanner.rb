@@ -68,8 +68,8 @@ context 'Scanner' do
   end
 
   context 'Repeat' do
-    test 'Any' do
-      token = Controls::Tokens::Repeat.any
+    test 'Any Number' do
+      token = Controls::Tokens::Repeat.any_number
 
       assert scanner do |scanner|
         scanner.token_rescannable? token

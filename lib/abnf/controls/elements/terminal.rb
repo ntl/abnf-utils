@@ -2,6 +2,10 @@ module ABNF
   module Controls
     module Elements
       module Terminal
+        def self.example
+          char_val
+        end
+
         def self.char_val character_sequence=nil
           character_sequence ||= Controls::Values::Terminal.character_sequence
           abnf = Controls::ABNF::Terminal.char_val character_sequence

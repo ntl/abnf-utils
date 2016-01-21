@@ -93,6 +93,12 @@ module ABNF
 
           element.abnf = abnf
           element
+        elsif repeat = accept('repeat')
+          element = alternation
+
+          abnf = repeat.abnf + element.abnf
+
+          Element::Repetition.new abnf, repeat.range, element
         else
           fail # XXX
         end
