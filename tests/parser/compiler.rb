@@ -127,5 +127,23 @@ context 'Recursive Descent Parser' do
         compiler.defined_rule? rule_name, repetition_element
       end
     end
+
+    test 'Bounded Range' do
+      tokens = Controls::Tokens.rule(
+        Controls::Tokens::Repeat.bounded_range,
+        Controls::Tokens::Terminal.example,
+      )
+
+      compiler = ABNF::Parser::Compiler.build tokens
+
+      compiler.()
+
+      assert compiler do |compiler|
+        terminal_element = Controls::Elements::Terminal.example
+        repetition_element = Controls::Elements::Repetition.bounded_range terminal_element
+
+        compiler.defined_rule? rule_name, repetition_element
+      end
+    end
   end
 end
