@@ -1,6 +1,6 @@
 require_relative './parser_tests_init'
 
-context 'Parser' do
+context 'Recursive Descent Parser' do
   context 'Terminal Elements' do
     context 'Numeric Values' do
       %w(BinVal DecVal HexVal).each do |base|
@@ -8,16 +8,16 @@ context 'Parser' do
           method_name = variant.downcase
 
           test "#{base} #{variant}" do
-            parser = ABNF::Parser::Parser.new
-
             token = Controls::Tokens::Terminal::NumVal.get base, method_name
             tokens = Controls::Tokens.rule token
 
-            parser.(tokens)
+            compiler = ABNF::Parser::Compiler.build tokens
 
-            assert parser do |parser|
+            compiler.()
+
+            assert compiler do |compiler|
               expected_element = Controls::Elements::Terminal::NumVal.get base, method_name
-              parser.defined_rule? 'some-rule', expected_element
+              compiler.defined_rule? 'some-rule', expected_element
             end
           end
         end
@@ -25,28 +25,28 @@ context 'Parser' do
     end
 
     test 'Prose Values' do
-      parser = ABNF::Parser::Parser.new
-
       token = Controls::Tokens::Terminal.prose_val
       tokens = Controls::Tokens.rule token
 
-      parser.(tokens)
+      compiler = ABNF::Parser::Compiler.build tokens
 
-      assert parser do |parser|
-        parser.defined_rule? 'some-rule', Controls::Elements::Terminal::ProseVal.value
+      compiler.()
+
+      assert compiler do |compiler|
+        compiler.defined_rule? 'some-rule', Controls::Elements::Terminal::ProseVal.value
       end
     end
 
     test 'Character Values' do
-      parser = ABNF::Parser::Parser.new
-
       token = Controls::Tokens::Terminal.char_val
       tokens = Controls::Tokens.rule token
 
-      parser.(tokens)
+      compiler = ABNF::Parser::Compiler.build tokens
 
-      assert parser do |parser|
-        parser.defined_rule? 'some-rule', Controls::Elements::Terminal::CharVal.value
+      compiler.()
+
+      assert compiler do |compiler|
+        compiler.defined_rule? 'some-rule', Controls::Elements::Terminal::CharVal.value
       end
     end
   end
