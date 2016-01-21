@@ -70,5 +70,24 @@ context 'Recursive Descent Parser' do
         compiler.defined_rule? rule_name, optional_element
       end
     end
+
+    test 'Group' do
+      tokens = Controls::Tokens.rule(
+        Controls::Tokens.group_start,
+        Controls::Tokens::Terminal.char_val,
+        Controls::Tokens.group_stop,
+      )
+
+      compiler = ABNF::Parser::Compiler.build tokens
+
+      compiler.()
+
+      assert compiler do |compiler|
+        terminal_element = Controls::Elements::Terminal.char_val
+        group_element = Controls::Elements.group terminal_element
+
+        compiler.defined_rule? rule_name, group_element
+      end
+    end
   end
 end

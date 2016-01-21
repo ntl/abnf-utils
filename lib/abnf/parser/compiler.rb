@@ -83,6 +83,16 @@ module ABNF
           next_token
 
           Element::Repetition.new abnf, range, element
+        elsif group_start = accept('group-start')
+          element = alternation
+
+          expect 'group-stop'
+
+          abnf = group_start.abnf + element.abnf + self.token.abnf
+          next_token
+
+          element.abnf = abnf
+          element
         else
           fail # XXX
         end
