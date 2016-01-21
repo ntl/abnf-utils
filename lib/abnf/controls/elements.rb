@@ -41,6 +41,16 @@ module ABNF
 
           Element::Repetition.new abnf, range, element
         end
+
+        def self.fixed element=nil
+          element ||= Terminal.char_val
+
+          abnf = "#{Controls::ABNF::Repeat.fixed}#{element.abnf}"
+          count = Values::Repetition.fixed
+          range = (count..count)
+
+          Element::Repetition.new abnf, range, element
+        end
       end
     end
   end
