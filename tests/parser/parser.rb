@@ -2,80 +2,51 @@ require_relative './parser_tests_init'
 
 context 'Parser' do
   context 'Terminal Elements' do
+    context 'Numeric Values' do
+      %w(BinVal DecVal HexVal).each do |base|
+        %w(Single Sequence Range).each do |variant|
+          method_name = variant.downcase
+
+          test "#{base} #{variant}" do
+            parser = ABNF::Parser::Parser.new
+
+            token = Controls::Tokens::Terminal::NumVal.get base, method_name
+            tokens = Controls::Tokens.rule token
+
+            parser.(tokens)
+
+            assert parser do |parser|
+              expected_element = Controls::Elements::Terminal::NumVal.get base, method_name
+              parser.defined_rule? 'some-rule', expected_element
+            end
+          end
+        end
+      end
+    end
+
     test 'Prose Values' do
-      rule_list = ABNF::RuleList.new
       parser = ABNF::Parser::Parser.new
-      parser.rule_list = rule_list
 
-      parser.([
-        Controls::Tokens.rulename,
-        Controls::Tokens.assignment,
-        Controls::Tokens::Terminal.prose_val,
-        Controls::Tokens.newline,
-      ])
+      token = Controls::Tokens::Terminal.prose_val
+      tokens = Controls::Tokens.rule token
 
-      assert rule_list['some-rule'].element == Controls::Elements::ProseVal.value
+      parser.(tokens)
+
+      assert parser do |parser|
+        parser.defined_rule? 'some-rule', Controls::Elements::Terminal::ProseVal.value
+      end
     end
 
     test 'Character Values' do
-      rule_list = ABNF::RuleList.new
       parser = ABNF::Parser::Parser.new
-      parser.rule_list = rule_list
 
-      parser.([
-        Controls::Tokens.rulename,
-        Controls::Tokens.assignment,
-        Controls::Tokens::Terminal.char_val,
-        Controls::Tokens.newline,
-      ])
+      token = Controls::Tokens::Terminal.char_val
+      tokens = Controls::Tokens.rule token
 
-      assert rule_list['some-rule'].element == Controls::Elements::CharVal.value
-    end
+      parser.(tokens)
 
-    context 'Numeric Values' do
-      test 'Range' do
-        rule_list = ABNF::RuleList.new
-        parser = ABNF::Parser::Parser.new
-        parser.rule_list = rule_list
-
-        parser.([
-          Controls::Tokens.rulename,
-          Controls::Tokens.assignment,
-          Controls::Tokens::Terminal::NumVal::BinVal.range,
-          Controls::Tokens.newline,
-        ])
-
-        assert rule_list['some-rule'].element == Controls::Elements::NumVal::Range.value
-      end
-
-      test 'Sequence' do
-        rule_list = ABNF::RuleList.new
-        parser = ABNF::Parser::Parser.new
-        parser.rule_list = rule_list
-
-        parser.([
-          Controls::Tokens.rulename,
-          Controls::Tokens.assignment,
-          Controls::Tokens::Terminal::NumVal::DecVal.sequence,
-          Controls::Tokens.newline,
-        ])
-
-        assert rule_list['some-rule'].element == Controls::Elements::NumVal::Sequence.value
-      end
-
-      test 'Single' do
-        rule_list = ABNF::RuleList.new
-        parser = ABNF::Parser::Parser.new
-        parser.rule_list = rule_list
-
-        parser.([
-          Controls::Tokens.rulename,
-          Controls::Tokens.assignment,
-          Controls::Tokens::Terminal::NumVal::HexVal.single,
-          Controls::Tokens.newline,
-        ])
-
-        assert rule_list['some-rule'].element == Controls::Elements::NumVal::Single.value
+      assert parser do |parser|
+        parser.defined_rule? 'some-rule', Controls::Elements::Terminal::CharVal.value
       end
     end
   end

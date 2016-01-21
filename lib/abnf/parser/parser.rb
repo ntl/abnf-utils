@@ -17,6 +17,12 @@ module ABNF
         @rule_list ||= RuleList.new
       end
 
+      module Assertions
+        def defined_rule? rule_name, element
+          rule_list[rule_name].element == element
+        end
+      end
+
       class Evaluation
         attr_reader :rule_list
         attr_reader :tokens
