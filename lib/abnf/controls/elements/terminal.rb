@@ -2,19 +2,15 @@ module ABNF
   module Controls
     module Elements
       module Terminal
-        module CharVal
-          def self.value character_sequence=nil
-            character_sequence ||= Controls::Values::Terminal.character_sequence
-            abnf = Controls::ABNF::Terminal.char_val character_sequence
-            Element::Terminal::Sequence.new abnf, character_sequence
-          end
+        def self.char_val character_sequence=nil
+          character_sequence ||= Controls::Values::Terminal.character_sequence
+          abnf = Controls::ABNF::Terminal.char_val character_sequence
+          Element::Terminal::Sequence.new abnf, character_sequence
         end
 
-        module ProseVal
-          def self.value prose=nil
-            prose ||= Values::Terminal.prose
-            Element::Terminal::ProseVal.new prose
-          end
+        def self.prose_val prose=nil
+          prose ||= Values::Terminal.prose
+          Element::Terminal::ProseVal.new prose
         end
 
         module NumVal

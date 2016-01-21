@@ -73,8 +73,16 @@ module ABNF
           else
             Element::Terminal::Sequence.new token.abnf, token.characters
           end
-        elsif token = accept('option-start')
-          fail 'NYI'
+        elsif option_start = accept('option-start')
+          range = (0..1)
+          element = alternation
+
+          expect 'option-stop'
+
+          abnf = option_start.abnf + element.abnf + self.token.abnf
+          next_token
+
+          Element::Repetition.new abnf, range, element
         else
           fail # XXX
         end

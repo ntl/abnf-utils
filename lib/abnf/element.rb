@@ -10,5 +10,8 @@ module ABNF
       class Sequence < Struct.new :abnf, :pattern
       end
     end
+
+    class Repetition < Struct.new :abnf, :range, :element
+    end
   end
 end
