@@ -145,51 +145,51 @@ context 'Recursive Descent Parser' do
         compiler.defined_rule? rule_name, repetition_element
       end
     end
+  end
 
-    test 'Concatenation' do
-      strings = Controls::Values.concatenation.first 2
+  test 'Concatenation' do
+    strings = Controls::Values.concatenation.first 2
 
-      tokens = Controls::Tokens.rule(
-        Controls::Tokens::Terminal.char_val(strings[0]),
-        Controls::Tokens.whitespace,
-        Controls::Tokens::Terminal.char_val(strings[1]),
-      )
+    tokens = Controls::Tokens.rule(
+      Controls::Tokens::Terminal.char_val(strings[0]),
+      Controls::Tokens.whitespace,
+      Controls::Tokens::Terminal.char_val(strings[1]),
+    )
 
-      compiler = ABNF::Parser::Compiler.build tokens
+    compiler = ABNF::Parser::Compiler.build tokens
 
-      compiler.()
+    compiler.()
 
-      assert compiler do |compiler|
-        elements = strings.map do |string|
-          Controls::Elements::Terminal.char_val string
-        end
-        concatenation_element = Controls::Elements.concatenation elements
-
-        compiler.defined_rule? rule_name, concatenation_element
+    assert compiler do |compiler|
+      elements = strings.map do |string|
+        Controls::Elements::Terminal.char_val string
       end
+      concatenation_element = Controls::Elements.concatenation elements
+
+      compiler.defined_rule? rule_name, concatenation_element
     end
+  end
 
-    test 'Alternation' do
-      strings = Controls::Values.alternation.first 2
+  test 'Alternation' do
+    strings = Controls::Values.alternation.first 2
 
-      tokens = Controls::Tokens.rule(
-        Controls::Tokens::Terminal.char_val(strings[0]),
-        Controls::Tokens.alternative_delimiter,
-        Controls::Tokens::Terminal.char_val(strings[1]),
-      )
+    tokens = Controls::Tokens.rule(
+      Controls::Tokens::Terminal.char_val(strings[0]),
+      Controls::Tokens.alternative_delimiter,
+      Controls::Tokens::Terminal.char_val(strings[1]),
+    )
 
-      compiler = ABNF::Parser::Compiler.build tokens
+    compiler = ABNF::Parser::Compiler.build tokens
 
-      compiler.()
+    compiler.()
 
-      assert compiler do |compiler|
-        elements = strings.map do |string|
-          Controls::Elements::Terminal.char_val string
-        end
-        alternation_element = Controls::Elements.alternation elements
-
-        compiler.defined_rule? rule_name, alternation_element
+    assert compiler do |compiler|
+      elements = strings.map do |string|
+        Controls::Elements::Terminal.char_val string
       end
+      alternation_element = Controls::Elements.alternation elements
+
+      compiler.defined_rule? rule_name, alternation_element
     end
   end
 end
