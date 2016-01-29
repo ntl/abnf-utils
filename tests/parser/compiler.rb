@@ -141,9 +141,19 @@ context 'Recursive Descent Parser' do
     end
   end
 
-  test 'Reference to another rule'
+  test 'Reference to another rule' do
+    tokens, expected_element = Controls::TokenStreams.reference
 
-  test 'Multiple rules'
+    compiler = ABNF::Parser::Compiler.build tokens
+
+    compiler.()
+
+    assert compiler do |compiler|
+      compiler.defined_rule? rule_name, expected_element
+    end
+  end
+
+  test 'Incremental assignment'
 
   test 'RFC 5234' do
     abnf = Controls::ABNF::RFC5234.value

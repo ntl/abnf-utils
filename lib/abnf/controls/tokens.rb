@@ -34,8 +34,8 @@ module ABNF
         Parser::Tokens::GroupStop.new abnf, Hash.new
       end
 
-      def self.rulename
-        value = 'some-rule'
+      def self.rulename value=nil
+        value ||= 'some-rule'
         Parser::Tokens::Rulename.new value, Hash.new
       end
 

@@ -63,6 +63,15 @@ module ABNF
         example *tokens, element: element
       end
 
+      def self.reference rulename=nil
+        rulename ||= Values.rulename
+
+        token = Tokens.rulename rulename
+        element = Controls::Elements.reference rulename
+
+        example token, element: element
+      end
+
       module Repetition
         def self.any_number
           tokens = [Tokens::Repeat.any_number, Tokens::Terminal.example]

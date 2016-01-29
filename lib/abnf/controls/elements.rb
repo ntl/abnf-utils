@@ -57,6 +57,11 @@ module ABNF
 
         Element::Repetition.new abnf, range, element
       end
+
+      def self.reference rulename=nil
+        rulename ||= Values.rulename
+        Element::Reference.new rulename
+      end
     end
   end
 end
