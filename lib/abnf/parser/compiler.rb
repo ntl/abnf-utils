@@ -2,17 +2,17 @@ module ABNF
   module Parser
     class Compiler
       attr_reader :rule_list
-      attr_reader :tokens
+      attr_reader :token_stream
       attr_accessor :token
 
-      def initialize tokens, rule_list
+      def initialize token_stream, rule_list
         @rule_list = rule_list
-        @tokens = tokens
+        @token_stream = token_stream
       end
 
-      def self.build tokens, rule_list=nil
+      def self.build token_stream, rule_list=nil
         rule_list ||= RuleList.new
-        new tokens, rule_list
+        new token_stream, rule_list
       end
 
       def self.call *arguments
@@ -48,7 +48,7 @@ module ABNF
       end
 
       def next_token
-        self.token = tokens.shift
+        self.token = token_stream.shift
         logger.info "Advanced token stream; current token is #{token}"
         token
       end
