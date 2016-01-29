@@ -1,6 +1,10 @@
 module ABNF
   module Controls
     module Elements
+      def self.example
+        Terminal.example
+      end
+
       def self.alternation elements=nil
         abnf = String.new
 

@@ -19,5 +19,8 @@ module ABNF
 
     class Repetition < Struct.new :abnf, :range, :element
     end
+
+    class Reference < Struct.new :abnf
+    end
   end
 end

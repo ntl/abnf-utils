@@ -34,17 +34,6 @@ module ABNF
         Parser::Tokens::GroupStop.new abnf, Hash.new
       end
 
-      def self.rule(*expression_tokens)
-        expression_tokens = [Terminal.example] if expression_tokens.empty?
-
-        [
-          Controls::Tokens.rulename,
-          Controls::Tokens.assignment,
-          *expression_tokens,
-          Controls::Tokens.newline,
-        ]
-      end
-
       def self.rulename
         value = 'some-rule'
         Parser::Tokens::Rulename.new value, Hash.new

@@ -22,7 +22,10 @@ module ABNF
 
       def call
         next_token
-        rule
+
+        while token
+          rule
+        end
       end
 
       def accept *token_identifiers
@@ -40,8 +43,14 @@ module ABNF
         true
       end
 
+      def logger
+        ExtendedLogger.get self.class
+      end
+
       def next_token
         self.token = tokens.shift
+        logger.info "Advanced token stream; current token is #{token}"
+        token
       end
 
       def alternation
@@ -76,6 +85,9 @@ module ABNF
 
         loop do
           next_element = repetition
+          if next_element.nil?
+            break
+          end
 
           abnf << next_element.abnf
           elements << next_element
@@ -97,17 +109,17 @@ module ABNF
       end
 
       def element
-        if token = accept('prose-val')
-          Element::Terminal::ProseVal.new token.prose
-        elsif token = accept('char-val')
-          Element::Terminal::Sequence.new token.abnf, token.characters
-        elsif token = accept('num-val')
-          range = token.range
+        if prose_val = accept('prose-val')
+          Element::Terminal::ProseVal.new prose_val.prose
+        elsif char_val = accept('char-val')
+          Element::Terminal::Sequence.new char_val.abnf, char_val.characters
+        elsif num_val = accept('num-val')
+          range = num_val.range
 
           if range
-            Element::Terminal::Range.new token.abnf, range
+            Element::Terminal::Range.new num_val.abnf, range
           else
-            Element::Terminal::Sequence.new token.abnf, token.characters
+            Element::Terminal::Sequence.new num_val.abnf, num_val.characters
           end
         elsif option_start = accept('option-start')
           range = (0..1)
@@ -135,12 +147,16 @@ module ABNF
           abnf = repeat.abnf + element.abnf
 
           Element::Repetition.new abnf, repeat.range, element
+        elsif rulename = accept('rulename')
+          Element::Reference.new rulename.abnf
         else
-          fail # XXX
+          expect 'newline'
+          nil
         end
       end
 
       def end_rule
+        logger.info 'Ending rule'
         expect 'newline'
         next_token
       end
@@ -157,6 +173,7 @@ module ABNF
       end
 
       def start_rule
+        logger.info 'Starting rule'
         expect 'rulename'
         name = token.value
         next_token
@@ -171,7 +188,6 @@ module ABNF
         end
 
         next_token
-
         rule
       end
 

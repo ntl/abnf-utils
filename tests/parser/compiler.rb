@@ -11,14 +11,14 @@ context 'Recursive Descent Parser' do
 
           test "#{base} #{variant}" do
             token = Controls::Tokens::Terminal::NumVal.get base, method_name
-            tokens = Controls::Tokens.rule token
+            expected_element = Controls::Elements::Terminal::NumVal.get base, method_name
+            tokens, expected_element = Controls::Tokens::Scenarios.example token, element: expected_element
 
             compiler = ABNF::Parser::Compiler.build tokens
 
             compiler.()
 
             assert compiler do |compiler|
-              expected_element = Controls::Elements::Terminal::NumVal.get base, method_name
               compiler.defined_rule? rule_name, expected_element
             end
           end
@@ -28,168 +28,131 @@ context 'Recursive Descent Parser' do
 
     test 'Prose Values' do
       token = Controls::Tokens::Terminal.prose_val
-      tokens = Controls::Tokens.rule token
+      expected_element = Controls::Elements::Terminal.prose_val
+      tokens, expected_element = Controls::Tokens::Scenarios.example token, element: expected_element
 
       compiler = ABNF::Parser::Compiler.build tokens
 
       compiler.()
 
       assert compiler do |compiler|
-        compiler.defined_rule? rule_name, Controls::Elements::Terminal.prose_val
+        compiler.defined_rule? rule_name, expected_element
       end
     end
 
     test 'Character Values' do
       token = Controls::Tokens::Terminal.char_val
-      tokens = Controls::Tokens.rule token
+      expected_element = Controls::Elements::Terminal.char_val
+      tokens, expected_element = Controls::Tokens::Scenarios.example token, element: expected_element
 
       compiler = ABNF::Parser::Compiler.build tokens
 
       compiler.()
 
       assert compiler do |compiler|
-        compiler.defined_rule? rule_name, Controls::Elements::Terminal.char_val
+        compiler.defined_rule? rule_name, expected_element
       end
     end
   end
 
   test 'Option' do
-    tokens = Controls::Tokens.rule(
-      Controls::Tokens.option_start,
-      Controls::Tokens::Terminal.char_val,
-      Controls::Tokens.option_stop,
-    )
+    tokens, expected_element = Controls::Tokens::Scenarios.group
 
     compiler = ABNF::Parser::Compiler.build tokens
 
     compiler.()
 
     assert compiler do |compiler|
-      terminal_element = Controls::Elements::Terminal.char_val
-      optional_element = Controls::Elements.optional terminal_element
-
-      compiler.defined_rule? rule_name, optional_element
+      compiler.defined_rule? rule_name, expected_element
     end
   end
 
   test 'Group' do
-    tokens = Controls::Tokens.rule(
-      Controls::Tokens.group_start,
-      Controls::Tokens::Terminal.example,
-      Controls::Tokens.group_stop,
-    )
+    tokens, expected_element = Controls::Tokens::Scenarios.group
 
     compiler = ABNF::Parser::Compiler.build tokens
 
     compiler.()
 
     assert compiler do |compiler|
-      terminal_element = Controls::Elements::Terminal.example
-      group_element = Controls::Elements.group terminal_element
-
-      compiler.defined_rule? rule_name, group_element
+      compiler.defined_rule? rule_name, expected_element
     end
   end
 
   context 'Repetition' do
     test 'Any Number' do
-      tokens = Controls::Tokens.rule(
-        Controls::Tokens::Repeat.any_number,
-        Controls::Tokens::Terminal.example,
-      )
+      tokens, expected_element = Controls::Tokens::Scenarios::Repetition.any_number
 
       compiler = ABNF::Parser::Compiler.build tokens
 
       compiler.()
 
       assert compiler do |compiler|
-        terminal_element = Controls::Elements::Terminal.example
-        repetition_element = Controls::Elements::Repetition.any_number terminal_element
-
-        compiler.defined_rule? rule_name, repetition_element
+        compiler.defined_rule? rule_name, expected_element
       end
     end
 
     test 'Fixed' do
-      tokens = Controls::Tokens.rule(
-        Controls::Tokens::Repeat.fixed,
-        Controls::Tokens::Terminal.example,
-      )
+      tokens, expected_element = Controls::Tokens::Scenarios::Repetition.fixed
 
       compiler = ABNF::Parser::Compiler.build tokens
 
       compiler.()
 
       assert compiler do |compiler|
-        terminal_element = Controls::Elements::Terminal.example
-        repetition_element = Controls::Elements::Repetition.fixed terminal_element
-
-        compiler.defined_rule? rule_name, repetition_element
+        compiler.defined_rule? rule_name, expected_element
       end
     end
 
     test 'Bounded Range' do
-      tokens = Controls::Tokens.rule(
-        Controls::Tokens::Repeat.bounded_range,
-        Controls::Tokens::Terminal.example,
-      )
+      tokens, expected_element = Controls::Tokens::Scenarios::Repetition.bounded_range
 
       compiler = ABNF::Parser::Compiler.build tokens
 
       compiler.()
 
       assert compiler do |compiler|
-        terminal_element = Controls::Elements::Terminal.example
-        repetition_element = Controls::Elements::Repetition.bounded_range terminal_element
-
-        compiler.defined_rule? rule_name, repetition_element
+        compiler.defined_rule? rule_name, expected_element
       end
     end
   end
 
   test 'Concatenation' do
-    strings = Controls::Values.concatenation.first 2
-
-    tokens = Controls::Tokens.rule(
-      Controls::Tokens::Terminal.char_val(strings[0]),
-      Controls::Tokens.whitespace,
-      Controls::Tokens::Terminal.char_val(strings[1]),
-    )
+    tokens, expected_element = Controls::Tokens::Scenarios.concatenation
 
     compiler = ABNF::Parser::Compiler.build tokens
 
     compiler.()
 
     assert compiler do |compiler|
-      elements = strings.map do |string|
-        Controls::Elements::Terminal.char_val string
-      end
-      concatenation_element = Controls::Elements.concatenation elements
-
-      compiler.defined_rule? rule_name, concatenation_element
+      compiler.defined_rule? rule_name, expected_element
     end
   end
 
   test 'Alternation' do
-    strings = Controls::Values.alternation.first 2
-
-    tokens = Controls::Tokens.rule(
-      Controls::Tokens::Terminal.char_val(strings[0]),
-      Controls::Tokens.alternative_delimiter,
-      Controls::Tokens::Terminal.char_val(strings[1]),
-    )
+    tokens, expected_element = Controls::Tokens::Scenarios.alternation
 
     compiler = ABNF::Parser::Compiler.build tokens
 
     compiler.()
 
     assert compiler do |compiler|
-      elements = strings.map do |string|
-        Controls::Elements::Terminal.char_val string
-      end
-      alternation_element = Controls::Elements.alternation elements
-
-      compiler.defined_rule? rule_name, alternation_element
+      compiler.defined_rule? rule_name, expected_element
     end
+  end
+
+  test 'Reference to another rule'
+
+  test 'Multiple rules'
+
+  test 'RFC 5234' do
+    abnf = Controls::ABNF::RFC5234.value
+    scanner = ABNF::Parser::Scanner.new
+    scanner.(abnf)
+    tokens = scanner.token_stream
+
+    compiler = ABNF::Parser::Compiler.build tokens
+
+    compiler.()
   end
 end
