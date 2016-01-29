@@ -85,9 +85,6 @@ module ABNF
 
         loop do
           next_element = repetition
-          if next_element.nil?
-            break
-          end
 
           abnf << next_element.abnf
           elements << next_element
@@ -96,12 +93,14 @@ module ABNF
 
           if whitespace
             abnf << whitespace.abnf
+            break if token.identifier == 'newline'
           else
             break
           end
         end
 
         if elements.size == 1
+          elements[0].abnf = abnf
           elements[0]
         else
           Element::Concatenation.new abnf, elements
@@ -150,14 +149,14 @@ module ABNF
         elsif rulename = accept('rulename')
           Element::Reference.new rulename.abnf
         else
-          expect 'newline'
-          nil
+          fail
         end
       end
 
-      def end_rule
+      def end_rule rule
         logger.info 'Ending rule'
         expect 'newline'
+        rule.abnf_parts << token.abnf
         next_token
       end
 
@@ -168,7 +167,8 @@ module ABNF
       def rule
         rule = start_rule
         rule.element = alternation
-        end_rule
+        rule.abnf_parts << rule.element.abnf
+        end_rule rule
         rule
       end
 
@@ -184,6 +184,8 @@ module ABNF
           fail # XXX
         else
           rule = Rule.new name
+          rule.abnf_parts << name
+          rule.abnf_parts << token.abnf
           rule_list.add rule
         end
 

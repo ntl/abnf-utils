@@ -154,5 +154,7 @@ context 'Recursive Descent Parser' do
     compiler = ABNF::Parser::Compiler.build tokens
 
     compiler.()
+
+    assert compiler.rule_list.abnf == abnf
   end
 end
