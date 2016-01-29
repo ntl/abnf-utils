@@ -4,7 +4,7 @@ context 'Parser' do
   test 'RFC 5234' do
     abnf = Controls::ABNF::RFC5234.value
 
-    rule_list = ABNF::Parser.(abnf)
+    rule_list = Parser.(abnf)
 
     assert rule_list.abnf == abnf
   end
