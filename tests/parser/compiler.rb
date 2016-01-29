@@ -12,7 +12,7 @@ context 'Recursive Descent Parser' do
           test "#{base} #{variant}" do
             token = Controls::Tokens::Terminal::NumVal.get base, method_name
             expected_element = Controls::Elements::Terminal::NumVal.get base, method_name
-            tokens, expected_element = Controls::Tokens::Scenarios.example token, element: expected_element
+            tokens, expected_element = Controls::TokenStreams.example token, element: expected_element
 
             compiler = ABNF::Parser::Compiler.build tokens
 
@@ -29,7 +29,7 @@ context 'Recursive Descent Parser' do
     test 'Prose Values' do
       token = Controls::Tokens::Terminal.prose_val
       expected_element = Controls::Elements::Terminal.prose_val
-      tokens, expected_element = Controls::Tokens::Scenarios.example token, element: expected_element
+      tokens, expected_element = Controls::TokenStreams.example token, element: expected_element
 
       compiler = ABNF::Parser::Compiler.build tokens
 
@@ -43,7 +43,7 @@ context 'Recursive Descent Parser' do
     test 'Character Values' do
       token = Controls::Tokens::Terminal.char_val
       expected_element = Controls::Elements::Terminal.char_val
-      tokens, expected_element = Controls::Tokens::Scenarios.example token, element: expected_element
+      tokens, expected_element = Controls::TokenStreams.example token, element: expected_element
 
       compiler = ABNF::Parser::Compiler.build tokens
 
@@ -56,7 +56,7 @@ context 'Recursive Descent Parser' do
   end
 
   test 'Option' do
-    tokens, expected_element = Controls::Tokens::Scenarios.group
+    tokens, expected_element = Controls::TokenStreams.group
 
     compiler = ABNF::Parser::Compiler.build tokens
 
@@ -68,7 +68,7 @@ context 'Recursive Descent Parser' do
   end
 
   test 'Group' do
-    tokens, expected_element = Controls::Tokens::Scenarios.group
+    tokens, expected_element = Controls::TokenStreams.group
 
     compiler = ABNF::Parser::Compiler.build tokens
 
@@ -81,7 +81,7 @@ context 'Recursive Descent Parser' do
 
   context 'Repetition' do
     test 'Any Number' do
-      tokens, expected_element = Controls::Tokens::Scenarios::Repetition.any_number
+      tokens, expected_element = Controls::TokenStreams::Repetition.any_number
 
       compiler = ABNF::Parser::Compiler.build tokens
 
@@ -93,7 +93,7 @@ context 'Recursive Descent Parser' do
     end
 
     test 'Fixed' do
-      tokens, expected_element = Controls::Tokens::Scenarios::Repetition.fixed
+      tokens, expected_element = Controls::TokenStreams::Repetition.fixed
 
       compiler = ABNF::Parser::Compiler.build tokens
 
@@ -105,7 +105,7 @@ context 'Recursive Descent Parser' do
     end
 
     test 'Bounded Range' do
-      tokens, expected_element = Controls::Tokens::Scenarios::Repetition.bounded_range
+      tokens, expected_element = Controls::TokenStreams::Repetition.bounded_range
 
       compiler = ABNF::Parser::Compiler.build tokens
 
@@ -118,7 +118,7 @@ context 'Recursive Descent Parser' do
   end
 
   test 'Concatenation' do
-    tokens, expected_element = Controls::Tokens::Scenarios.concatenation
+    tokens, expected_element = Controls::TokenStreams.concatenation
 
     compiler = ABNF::Parser::Compiler.build tokens
 
@@ -130,7 +130,7 @@ context 'Recursive Descent Parser' do
   end
 
   test 'Alternation' do
-    tokens, expected_element = Controls::Tokens::Scenarios.alternation
+    tokens, expected_element = Controls::TokenStreams.alternation
 
     compiler = ABNF::Parser::Compiler.build tokens
 
