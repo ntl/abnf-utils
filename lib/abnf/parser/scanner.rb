@@ -5,12 +5,9 @@ module ABNF
       attr_writer :token_count
       attr_writer :token_stream
 
-      def self.build token_stream=nil
-        token_stream ||= Token::Stream.new
-
+      def self.call abnf
         instance = new
-        instance.token_stream = token_stream
-        instance
+        instance.(abnf)
       end
 
       def [] name
@@ -28,6 +25,7 @@ module ABNF
         end
 
         logger.info "Finished scan (Tokens: #{token_count})"
+        token_stream
       end
 
       def increment_token_count

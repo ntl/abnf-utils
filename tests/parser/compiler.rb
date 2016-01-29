@@ -154,17 +154,4 @@ context 'Recursive Descent Parser' do
   end
 
   test 'Incremental assignment'
-
-  test 'RFC 5234' do
-    abnf = Controls::ABNF::RFC5234.value
-    scanner = ABNF::Parser::Scanner.new
-    scanner.(abnf)
-    tokens = scanner.token_stream
-
-    compiler = ABNF::Parser::Compiler.build tokens
-
-    compiler.()
-
-    assert compiler.rule_list.abnf == abnf
-  end
 end
