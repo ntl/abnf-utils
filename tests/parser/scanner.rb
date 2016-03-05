@@ -9,7 +9,7 @@ context 'Scanner' do
         method_name = variant.downcase
 
         test "#{base} #{variant}" do
-          token = Controls::Tokens::Terminal::NumVal.get base, method_name
+          token = Controls::Parser::Tokens::Terminal::NumVal.get base, method_name
 
           assert scanner do |scanner|
             scanner.token_rescannable? token
@@ -20,7 +20,7 @@ context 'Scanner' do
   end
 
   test 'Character Values' do
-    token = Controls::Tokens::Terminal.char_val
+    token = Controls::Parser::Tokens::Terminal.char_val
 
     assert scanner do |scanner|
       scanner.token_rescannable? token
@@ -28,7 +28,7 @@ context 'Scanner' do
   end
 
   test 'Prose Values' do
-    token = Controls::Tokens::Terminal.prose_val
+    token = Controls::Parser::Tokens::Terminal.prose_val
 
     assert scanner do |scanner|
       scanner.token_rescannable? token
@@ -36,7 +36,7 @@ context 'Scanner' do
   end
 
   test 'Start of Option' do
-    token = Controls::Tokens.option_start
+    token = Controls::Parser::Tokens.option_start
 
     assert scanner do |scanner|
       scanner.token_rescannable? token
@@ -44,7 +44,7 @@ context 'Scanner' do
   end
 
   test 'Option Stop' do
-    token = Controls::Tokens.option_stop
+    token = Controls::Parser::Tokens.option_stop
 
     assert scanner do |scanner|
       scanner.token_rescannable? token
@@ -52,7 +52,7 @@ context 'Scanner' do
   end
 
   test 'Start of Group' do
-    token = Controls::Tokens.group_start
+    token = Controls::Parser::Tokens.group_start
 
     assert scanner do |scanner|
       scanner.token_rescannable? token
@@ -60,7 +60,7 @@ context 'Scanner' do
   end
 
   test 'Group Stop' do
-    token = Controls::Tokens.group_stop
+    token = Controls::Parser::Tokens.group_stop
 
     assert scanner do |scanner|
       scanner.token_rescannable? token
@@ -69,7 +69,7 @@ context 'Scanner' do
 
   context 'Repeat' do
     test 'Any Number' do
-      token = Controls::Tokens::Repeat.any_number
+      token = Controls::Parser::Tokens::Repeat.any_number
 
       assert scanner do |scanner|
         scanner.token_rescannable? token
@@ -77,7 +77,7 @@ context 'Scanner' do
     end
 
     test 'Fixed' do
-      token = Controls::Tokens::Repeat.fixed
+      token = Controls::Parser::Tokens::Repeat.fixed
 
       assert scanner do |scanner|
         scanner.token_rescannable? token
@@ -85,7 +85,7 @@ context 'Scanner' do
     end
 
     test 'Bounded Range' do
-      token = Controls::Tokens::Repeat.bounded_range
+      token = Controls::Parser::Tokens::Repeat.bounded_range
 
       assert scanner do |scanner|
         scanner.token_rescannable? token
@@ -96,7 +96,7 @@ context 'Scanner' do
   context 'Whitespace' do
     test 'Single Space' do
       whitespace = Controls::Values.whitespace
-      token = Controls::Tokens.whitespace whitespace
+      token = Controls::Parser::Tokens.whitespace whitespace
 
       assert scanner do |scanner|
         scanner.token_rescannable? token
@@ -104,7 +104,7 @@ context 'Scanner' do
     end
 
     test 'Comments' do
-      token = Controls::Tokens.whitespace " ; some-comment\r\n "
+      token = Controls::Parser::Tokens.whitespace " ; some-comment\r\n "
 
       assert scanner do |scanner|
         scanner.token_rescannable? token
@@ -113,7 +113,7 @@ context 'Scanner' do
   end
 
   test 'Alternative Delimiter' do
-    token = Controls::Tokens.alternative_delimiter
+    token = Controls::Parser::Tokens.alternative_delimiter
 
     assert scanner do |scanner|
       scanner.token_rescannable? token
@@ -121,7 +121,7 @@ context 'Scanner' do
   end
 
   test 'Newline' do
-    token = Controls::Tokens.newline
+    token = Controls::Parser::Tokens.newline
 
     assert scanner do |scanner|
       scanner.token_rescannable? token
@@ -129,7 +129,7 @@ context 'Scanner' do
   end
 
   test 'Assignment' do
-    token = Controls::Tokens.assignment
+    token = Controls::Parser::Tokens.assignment
 
     assert scanner do |scanner|
       scanner.token_rescannable? token

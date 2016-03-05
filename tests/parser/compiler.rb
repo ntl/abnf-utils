@@ -10,9 +10,9 @@ context 'Recursive Descent Parser' do
           method_name = variant.downcase
 
           test "#{base} #{variant}" do
-            token = Controls::Tokens::Terminal::NumVal.get base, method_name
-            expected_node = Controls::Nodes::Terminal::NumVal.get base, method_name
-            tokens, expected_node = Controls::TokenStreams.example token, node: expected_node
+            token = Controls::Parser::Tokens::Terminal::NumVal.get base, method_name
+            expected_node = Controls::AST::Nodes::Terminal::NumVal.get base, method_name
+            tokens, expected_node = Controls::Parser::CompilerScenarios::Factory.([token], expected_node)
 
             compiler = ABNF::Parser::Compiler.build tokens
 
@@ -27,9 +27,9 @@ context 'Recursive Descent Parser' do
     end
 
     test 'Prose Values' do
-      token = Controls::Tokens::Terminal.prose_val
-      expected_node = Controls::Nodes::Terminal.prose_val
-      tokens, expected_node = Controls::TokenStreams.example token, node: expected_node
+      token = Controls::Parser::Tokens::Terminal.prose_val
+      expected_node = Controls::AST::Nodes::Terminal.prose_val
+      tokens, expected_node = Controls::Parser::CompilerScenarios::Factory.([token], expected_node)
 
       compiler = ABNF::Parser::Compiler.build tokens
 
@@ -41,9 +41,9 @@ context 'Recursive Descent Parser' do
     end
 
     test 'Character Values' do
-      token = Controls::Tokens::Terminal.char_val
-      expected_node = Controls::Nodes::Terminal.char_val
-      tokens, expected_node = Controls::TokenStreams.example token, node: expected_node
+      token = Controls::Parser::Tokens::Terminal.char_val
+      expected_node = Controls::AST::Nodes::Terminal.char_val
+      tokens, expected_node = Controls::Parser::CompilerScenarios::Factory.([token], expected_node)
 
       compiler = ABNF::Parser::Compiler.build tokens
 
@@ -56,7 +56,7 @@ context 'Recursive Descent Parser' do
   end
 
   test 'Option' do
-    tokens, expected_node = Controls::TokenStreams.group
+    tokens, expected_node = Controls::Parser::CompilerScenarios.group
 
     compiler = ABNF::Parser::Compiler.build tokens
 
@@ -68,7 +68,7 @@ context 'Recursive Descent Parser' do
   end
 
   test 'Group' do
-    tokens, expected_node = Controls::TokenStreams.group
+    tokens, expected_node = Controls::Parser::CompilerScenarios.group
 
     compiler = ABNF::Parser::Compiler.build tokens
 
@@ -81,7 +81,7 @@ context 'Recursive Descent Parser' do
 
   context 'Repetition' do
     test 'Any Number' do
-      tokens, expected_node = Controls::TokenStreams::Repetition.any_number
+      tokens, expected_node = Controls::Parser::CompilerScenarios::Repetition.any_number
 
       compiler = ABNF::Parser::Compiler.build tokens
 
@@ -93,7 +93,7 @@ context 'Recursive Descent Parser' do
     end
 
     test 'Fixed' do
-      tokens, expected_node = Controls::TokenStreams::Repetition.fixed
+      tokens, expected_node = Controls::Parser::CompilerScenarios::Repetition.fixed
 
       compiler = ABNF::Parser::Compiler.build tokens
 
@@ -105,7 +105,7 @@ context 'Recursive Descent Parser' do
     end
 
     test 'Bounded Range' do
-      tokens, expected_node = Controls::TokenStreams::Repetition.bounded_range
+      tokens, expected_node = Controls::Parser::CompilerScenarios::Repetition.bounded_range
 
       compiler = ABNF::Parser::Compiler.build tokens
 
@@ -118,7 +118,7 @@ context 'Recursive Descent Parser' do
   end
 
   test 'Concatenation' do
-    tokens, expected_node = Controls::TokenStreams.concatenation
+    tokens, expected_node = Controls::Parser::CompilerScenarios.concatenation
 
     compiler = ABNF::Parser::Compiler.build tokens
 
@@ -130,7 +130,7 @@ context 'Recursive Descent Parser' do
   end
 
   test 'Alternation' do
-    tokens, expected_node = Controls::TokenStreams.alternation
+    tokens, expected_node = Controls::Parser::CompilerScenarios.alternation
 
     compiler = ABNF::Parser::Compiler.build tokens
 
@@ -142,7 +142,7 @@ context 'Recursive Descent Parser' do
   end
 
   test 'Reference to another rule' do
-    tokens, expected_node = Controls::TokenStreams.reference
+    tokens, expected_node = Controls::Parser::CompilerScenarios.reference
 
     compiler = ABNF::Parser::Compiler.build tokens
 

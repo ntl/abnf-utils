@@ -15,7 +15,7 @@ module ABNF
       end
 
       def call abnf
-        logger.trace "Starting scan (Characters: #{abnf.size}, Tokens: #{token_count})"
+        logger.trace "Starting scan (Characters: #{abnf.size}, Token: #{token_count})"
         logger.data do abnf end
 
         until abnf.empty?
@@ -24,7 +24,7 @@ module ABNF
           push_token token
         end
 
-        logger.debug "Finished scan (Tokens: #{token_count})"
+        logger.debug "Finished scan (Token: #{token_count})"
         token_stream
       end
 

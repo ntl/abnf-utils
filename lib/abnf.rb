@@ -4,8 +4,8 @@ require 'abnf/logging'
 require 'abnf/rule_list'
 require 'abnf/rule'
 
-require 'abnf/parser/tokens/token'
-require 'abnf/parser/tokens'
+require 'abnf/parser/token'
+require 'abnf/parser/token/tokens'
 
 require 'abnf/parser'
 require 'abnf/parser/compiler'

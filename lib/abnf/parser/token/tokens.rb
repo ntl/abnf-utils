@@ -1,6 +1,6 @@
 module ABNF
   module Parser
-    module Tokens
+    class Token
       class AlternativeDelimiter < Token
       end
 
