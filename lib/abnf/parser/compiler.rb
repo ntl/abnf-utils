@@ -21,11 +21,15 @@ module ABNF
       end
 
       def call
+        logger.trace "Compiling ABNF (Stream Size: #{token_stream.size}, Rules: #{rule_list.size})"
+
         next_token
 
         while token
           rule
         end
+
+        logger.debug "Compiled ABNF (Stream Size: #{token_stream.size}, Rules: #{rule_list.size})"
       end
 
       def accept *token_identifiers
@@ -49,7 +53,6 @@ module ABNF
 
       def next_token
         self.token = token_stream.shift
-        logger.info "Advanced token stream; current token is #{token}"
         token
       end
 
@@ -154,10 +157,11 @@ module ABNF
       end
 
       def end_rule rule
-        logger.info 'Ending rule'
         expect 'newline'
         rule.abnf_parts << token.abnf
         next_token
+
+        logger.debug "Compiled rule (Name: #{rule.name.inspect})"
       end
 
       def repetition
@@ -173,9 +177,11 @@ module ABNF
       end
 
       def start_rule
-        logger.info 'Starting rule'
         expect 'rulename'
         name = token.value
+
+        logger.trace "Starting rule (Name: #{name.inspect})"
+
         next_token
 
         expect 'defined-as'

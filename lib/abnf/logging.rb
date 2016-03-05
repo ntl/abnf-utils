@@ -11,10 +11,19 @@ module ABNF
       :fatal => { :fg => :white, :bg => :red },
     )
 
+    levels = ExtendedLogger::Level::Set.build(
+      %i(data trace debug info warn error fatal),
+      :default => :info,
+    )
+
+    Logger = ExtendedLogger.define levels, :color_scheme => :color_scheme
+
     self.registry = ExtendedLogger::Registry.build(
-      ExtendedLogger::Logger,
+      Logger,
       :color_scheme => color_scheme,
     )
+
+    registry.level = ENV['LOG_LEVEL'] if ENV['LOG_LEVEL']
 
     def get receiver
       registry.get receiver

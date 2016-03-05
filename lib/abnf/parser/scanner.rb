@@ -15,8 +15,8 @@ module ABNF
       end
 
       def call abnf
-        logger.info "Starting scan (Characters: #{abnf.size})"
-        logger.debug do abnf end
+        logger.trace "Starting scan (Characters: #{abnf.size}, Tokens: #{token_count})"
+        logger.data do abnf end
 
         until abnf.empty?
           token, abnf = self.next abnf
@@ -24,7 +24,7 @@ module ABNF
           push_token token
         end
 
-        logger.info "Finished scan (Tokens: #{token_count})"
+        logger.debug "Finished scan (Tokens: #{token_count})"
         token_stream
       end
 
@@ -61,8 +61,6 @@ module ABNF
       end
 
       def push_token token
-        logger.debug token.inspect
-
         increment_token_count
 
         token_stream << token

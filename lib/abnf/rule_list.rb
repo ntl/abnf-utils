@@ -27,6 +27,10 @@ module ABNF
       table.keys
     end
 
+    def size
+      table.size
+    end
+
     def table
       @table ||= {}
     end
