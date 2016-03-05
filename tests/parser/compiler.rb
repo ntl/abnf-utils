@@ -7,15 +7,10 @@ context 'Recursive Descent Parser' do
     context 'Numeric Values' do
       %w(BinVal DecVal HexVal).each do |base|
         %w(Single Sequence Range).each do |variant|
-          method_name = variant.downcase
-
           test "#{base} #{variant}" do
-            token = Controls::Parser::Tokens::Terminal::NumVal.get base, method_name
-            expected_node = Controls::AST::Nodes::Terminal::NumVal.get base, method_name
-            tokens, expected_node = Controls::Parser::CompilerScenarios::Factory.([token], expected_node)
+            tokens, expected_node = Controls::Parser::CompilerScenarios::Terminal::NumVal.example base, variant
 
             compiler = ABNF::Parser::Compiler.build tokens
-
             compiler.()
 
             assert compiler do
@@ -27,12 +22,9 @@ context 'Recursive Descent Parser' do
     end
 
     test 'Prose Values' do
-      token = Controls::Parser::Tokens::Terminal.prose_val
-      expected_node = Controls::AST::Nodes::Terminal.prose_val
-      tokens, expected_node = Controls::Parser::CompilerScenarios::Factory.([token], expected_node)
+      tokens, expected_node = Controls::Parser::CompilerScenarios::Terminal.prose_val
 
       compiler = ABNF::Parser::Compiler.build tokens
-
       compiler.()
 
       assert compiler do |compiler|
@@ -41,12 +33,9 @@ context 'Recursive Descent Parser' do
     end
 
     test 'Character Values' do
-      token = Controls::Parser::Tokens::Terminal.char_val
-      expected_node = Controls::AST::Nodes::Terminal.char_val
-      tokens, expected_node = Controls::Parser::CompilerScenarios::Factory.([token], expected_node)
+      tokens, expected_node = Controls::Parser::CompilerScenarios::Terminal.char_val
 
       compiler = ABNF::Parser::Compiler.build tokens
-
       compiler.()
 
       assert compiler do |compiler|
@@ -59,7 +48,6 @@ context 'Recursive Descent Parser' do
     tokens, expected_node = Controls::Parser::CompilerScenarios.group
 
     compiler = ABNF::Parser::Compiler.build tokens
-
     compiler.()
 
     assert compiler do |compiler|
@@ -71,7 +59,6 @@ context 'Recursive Descent Parser' do
     tokens, expected_node = Controls::Parser::CompilerScenarios.group
 
     compiler = ABNF::Parser::Compiler.build tokens
-
     compiler.()
 
     assert compiler do |compiler|
@@ -84,7 +71,6 @@ context 'Recursive Descent Parser' do
       tokens, expected_node = Controls::Parser::CompilerScenarios::Repetition.any_number
 
       compiler = ABNF::Parser::Compiler.build tokens
-
       compiler.()
 
       assert compiler do |compiler|
@@ -96,7 +82,6 @@ context 'Recursive Descent Parser' do
       tokens, expected_node = Controls::Parser::CompilerScenarios::Repetition.fixed
 
       compiler = ABNF::Parser::Compiler.build tokens
-
       compiler.()
 
       assert compiler do |compiler|
@@ -108,7 +93,6 @@ context 'Recursive Descent Parser' do
       tokens, expected_node = Controls::Parser::CompilerScenarios::Repetition.bounded_range
 
       compiler = ABNF::Parser::Compiler.build tokens
-
       compiler.()
 
       assert compiler do |compiler|
@@ -121,7 +105,6 @@ context 'Recursive Descent Parser' do
     tokens, expected_node = Controls::Parser::CompilerScenarios.concatenation
 
     compiler = ABNF::Parser::Compiler.build tokens
-
     compiler.()
 
     assert compiler do |compiler|
@@ -133,7 +116,6 @@ context 'Recursive Descent Parser' do
     tokens, expected_node = Controls::Parser::CompilerScenarios.alternation
 
     compiler = ABNF::Parser::Compiler.build tokens
-
     compiler.()
 
     assert compiler do |compiler|
@@ -145,7 +127,6 @@ context 'Recursive Descent Parser' do
     tokens, expected_node = Controls::Parser::CompilerScenarios.reference
 
     compiler = ABNF::Parser::Compiler.build tokens
-
     compiler.()
 
     assert compiler do |compiler|
