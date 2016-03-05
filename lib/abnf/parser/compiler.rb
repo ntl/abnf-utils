@@ -44,7 +44,7 @@ module ABNF
       end
 
       def logger
-        ExtendedLogger.get self.class
+        Logging.get self
       end
 
       def next_token

@@ -15,4 +15,6 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
 
   s.add_development_dependency 'test_bench', '~> 0', '>= 0.9.0'
+
+  s.add_runtime_dependency 'extended_logger', '~> 0'
 end

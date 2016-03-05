@@ -1,4 +1,7 @@
+require 'extended_logger'
+
 require 'abnf/element'
+require 'abnf/logging'
 require 'abnf/rule_list'
 require 'abnf/rule'
 
