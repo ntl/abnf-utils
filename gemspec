@@ -14,5 +14,5 @@ Gem::Specification.new do |s|
   s.files = Dir.glob 'lib/**/*'
   s.platform = Gem::Platform::RUBY
 
-  s.add_development_dependency 'test_bench', '~> 0', '>= 0.3.3'
+  s.add_development_dependency 'test_bench', '~> 0', '>= 0.9.0'
 end
