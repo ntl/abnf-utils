@@ -4,7 +4,17 @@ module ABNF
 
     attr_accessor :registry
 
-    self.registry = ExtendedLogger::Registry.build ExtendedLogger::Logger
+    color_scheme = ExtendedLogger::ColorScheme.build(
+      :debug => :cyan,
+      :warn => :brown,
+      :error => :red,
+      :fatal => { :fg => :white, :bg => :red },
+    )
+
+    self.registry = ExtendedLogger::Registry.build(
+      ExtendedLogger::Logger,
+      :color_scheme => color_scheme,
+    )
 
     def get receiver
       registry.get receiver
