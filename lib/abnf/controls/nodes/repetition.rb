@@ -1,6 +1,6 @@
 module ABNF
   module Controls
-    module Elements
+    module Nodes
       module Repetition
         def self.example
           any_number
@@ -12,7 +12,7 @@ module ABNF
           abnf = "#{Controls::ABNF::Repeat.any_number}#{element.abnf}"
           range = Values::Repetition.any_number
 
-          Element::Repetition.new abnf, range, element
+          Parser::Node::Repetition.new abnf, range, element
         end
 
         def self.fixed element=nil
@@ -22,7 +22,7 @@ module ABNF
           count = Values::Repetition.fixed
           range = (count..count)
 
-          Element::Repetition.new abnf, range, element
+          Parser::Node::Repetition.new abnf, range, element
         end
 
         def self.bounded_range element=nil
@@ -31,7 +31,7 @@ module ABNF
           abnf = "#{Controls::ABNF::Repeat.bounded_range}#{element.abnf}"
           range = Values::Repetition.bounded_range
 
-          Element::Repetition.new abnf, range, element
+          Parser::Node::Repetition.new abnf, range, element
         end
       end
     end

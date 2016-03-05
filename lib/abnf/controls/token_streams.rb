@@ -1,13 +1,13 @@
 module ABNF
   module Controls
     module TokenStreams
-      def self.example(*tokens, element: nil)
+      def self.example(*tokens, node: nil)
         tokens = [Terminal.example] if tokens.empty?
-        element ||= Elements.example
+        node ||= Nodes.example
 
         tokens = [Tokens.rulename, Tokens.assignment, *tokens, Tokens.newline]
 
-        return tokens, element
+        return tokens, node
       end
 
       def self.alternation
@@ -19,13 +19,13 @@ module ABNF
           Tokens::Terminal.char_val(strings[1]),
         ]
 
-        elements = strings.map do |string|
-          Elements::Terminal.char_val string
+        nodes = strings.map do |string|
+          Nodes::Terminal.char_val string
         end
 
-        element = Elements.alternation elements
+        node = Nodes.alternation nodes
 
-        example *tokens, element: element
+        example *tokens, node: node
       end
 
       def self.concatenation
@@ -37,67 +37,67 @@ module ABNF
           Tokens::Terminal.char_val(strings[1]),
         ]
 
-        elements = strings.map do |string|
-          Elements::Terminal.char_val string
+        nodes = strings.map do |string|
+          Nodes::Terminal.char_val string
         end
-        element = Elements.concatenation elements
+        node = Nodes.concatenation nodes
 
-        example *tokens, element: element
+        example *tokens, node: node
       end
 
       def self.group
         tokens = [Tokens.group_start, Tokens::Terminal.example, Tokens.group_stop]
 
-        terminal_element = Controls::Elements::Terminal.example
-        element = Controls::Elements.group terminal_element
+        terminal_node = Controls::Nodes::Terminal.example
+        node = Controls::Nodes.group terminal_node
 
-        example *tokens, element: element
+        example *tokens, node: node
       end
 
       def self.option
         tokens = [Tokens.option_start, Terminal.char_val, Tokens.option_stop]
 
-        terminal_element = Controls::Elements::Terminal.char_val
-        element = Controls::Elements.optional terminal_element
+        terminal_node = Controls::Nodes::Terminal.char_val
+        node = Controls::Nodes.optional terminal_node
 
-        example *tokens, element: element
+        example *tokens, node: node
       end
 
       def self.reference rulename=nil
         rulename ||= Values.rulename
 
         token = Tokens.rulename rulename
-        element = Controls::Elements.reference rulename
+        node = Controls::Nodes.reference rulename
 
-        example token, element: element
+        example token, node: node
       end
 
       module Repetition
         def self.any_number
           tokens = [Tokens::Repeat.any_number, Tokens::Terminal.example]
 
-          terminal_element = Controls::Elements::Terminal.example
-          element = Controls::Elements::Repetition.any_number terminal_element
+          terminal_node = Controls::Nodes::Terminal.example
+          node = Controls::Nodes::Repetition.any_number terminal_node
 
-          TokenStreams.example *tokens, element: element
+          TokenStreams.example *tokens, node: node
         end
 
         def self.fixed
           tokens = [Tokens::Repeat.fixed, Tokens::Terminal.example]
 
-          terminal_element = Elements::Terminal.example
-          element = Elements::Repetition.fixed terminal_element
+          terminal_node = Nodes::Terminal.example
+          node = Nodes::Repetition.fixed terminal_node
 
-          TokenStreams.example *tokens, element: element
+          TokenStreams.example *tokens, node: node
         end
 
         def self.bounded_range
           tokens = [Tokens::Repeat.bounded_range, Tokens::Terminal.example]
 
-          terminal_element = Elements::Terminal.example
-          element = Elements::Repetition.bounded_range terminal_element
+          terminal_node = Nodes::Terminal.example
+          node = Nodes::Repetition.bounded_range terminal_node
 
-          TokenStreams.example *tokens, element: element
+          TokenStreams.example *tokens, node: node
         end
       end
     end

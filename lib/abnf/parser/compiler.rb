@@ -78,7 +78,7 @@ module ABNF
         if elements.size == 1
           elements[0]
         else
-          Element::Alternation.new abnf, elements
+          Node::Alternation.new abnf, elements
         end
       end
 
@@ -106,22 +106,22 @@ module ABNF
           elements[0].abnf = abnf
           elements[0]
         else
-          Element::Concatenation.new abnf, elements
+          Node::Concatenation.new abnf, elements
         end
       end
 
       def element
         if prose_val = accept('prose-val')
-          Element::Terminal::ProseVal.new prose_val.prose
+          Node::Terminal::ProseVal.new prose_val.prose
         elsif char_val = accept('char-val')
-          Element::Terminal::Sequence.new char_val.abnf, char_val.characters
+          Node::Terminal::Sequence.new char_val.abnf, char_val.characters
         elsif num_val = accept('num-val')
           range = num_val.range
 
           if range
-            Element::Terminal::Range.new num_val.abnf, range
+            Node::Terminal::Range.new num_val.abnf, range
           else
-            Element::Terminal::Sequence.new num_val.abnf, num_val.characters
+            Node::Terminal::Sequence.new num_val.abnf, num_val.characters
           end
         elsif option_start = accept('option-start')
           range = (0..1)
@@ -132,7 +132,7 @@ module ABNF
           abnf = option_start.abnf + element.abnf + self.token.abnf
           next_token
 
-          Element::Repetition.new abnf, range, element
+          Node::Repetition.new abnf, range, element
         elsif group_start = accept('group-start')
           element = alternation
 
@@ -148,9 +148,9 @@ module ABNF
 
           abnf = repeat.abnf + element.abnf
 
-          Element::Repetition.new abnf, repeat.range, element
+          Node::Repetition.new abnf, repeat.range, element
         elsif rulename = accept('rulename')
-          Element::Reference.new rulename.abnf
+          Node::Reference.new rulename.abnf
         else
           fail
         end

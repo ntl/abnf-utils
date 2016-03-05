@@ -1,6 +1,6 @@
 module ABNF
   module Controls
-    module Elements
+    module Nodes
       def self.example
         Terminal.example
       end
@@ -15,7 +15,7 @@ module ABNF
         delimiter = Controls::ABNF.alternative_delimiter
         abnf = elements.map(&:abnf) * delimiter
 
-        Element::Alternation.new abnf, elements
+        Parser::Node::Alternation.new abnf, elements
       end
 
       def self.concatenation elements=nil
@@ -28,7 +28,7 @@ module ABNF
         whitespace = Controls::ABNF.whitespace
         abnf = elements.map(&:abnf) * whitespace
 
-        Element::Concatenation.new abnf, elements
+        Parser::Node::Concatenation.new abnf, elements
       end
 
       def self.group element=nil
@@ -55,12 +55,12 @@ module ABNF
 
         range = (0..1)
 
-        Element::Repetition.new abnf, range, element
+        Parser::Node::Repetition.new abnf, range, element
       end
 
       def self.reference rulename=nil
         rulename ||= Values.rulename
-        Element::Reference.new rulename
+        Parser::Node::Reference.new rulename
       end
     end
   end
