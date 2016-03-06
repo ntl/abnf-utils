@@ -26,7 +26,7 @@ module ABNF
       end
 
       def self.repetition
-        Repetition.example
+        Repetition.any_number
       end
 
       def self.rulename
