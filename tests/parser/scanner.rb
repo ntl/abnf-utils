@@ -1,9 +1,9 @@
-require_relative './parser_tests_init'
+require_relative '../test_init'
 
-context 'Scanner' do
+context "Scanner" do
   scanner = ABNF::Parser::Scanner.new
 
-  context 'Numeric Values' do
+  context "Numeric Values" do
     %w(BinVal DecVal HexVal).each do |base|
       %w(Single Sequence Range).each do |variant|
         test "#{base} #{variant}" do
@@ -17,7 +17,7 @@ context 'Scanner' do
     end
   end
 
-  test 'Character Values' do
+  test "Character Values" do
     token = Controls::Parser::Tokens.char_val
 
     assert scanner do |scanner|
@@ -25,7 +25,7 @@ context 'Scanner' do
     end
   end
 
-  test 'Prose Values' do
+  test "Prose Values" do
     token = Controls::Parser::Tokens.prose_val
 
     assert scanner do |scanner|
@@ -33,7 +33,7 @@ context 'Scanner' do
     end
   end
 
-  test 'Start of Option' do
+  test "Start of Option" do
     token = Controls::Parser::Tokens.option_start
 
     assert scanner do |scanner|
@@ -41,7 +41,7 @@ context 'Scanner' do
     end
   end
 
-  test 'Option Stop' do
+  test "Option Stop" do
     token = Controls::Parser::Tokens.option_stop
 
     assert scanner do |scanner|
@@ -49,7 +49,7 @@ context 'Scanner' do
     end
   end
 
-  test 'Start of Group' do
+  test "Start of Group" do
     token = Controls::Parser::Tokens.group_start
 
     assert scanner do |scanner|
@@ -57,7 +57,7 @@ context 'Scanner' do
     end
   end
 
-  test 'Group Stop' do
+  test "Group Stop" do
     token = Controls::Parser::Tokens.group_stop
 
     assert scanner do |scanner|
@@ -65,8 +65,8 @@ context 'Scanner' do
     end
   end
 
-  context 'Repeat' do
-    test 'Any Number' do
+  context "Repeat" do
+    test "Any Number" do
       token = Controls::Parser::Tokens::Repeat.any_number
 
       assert scanner do |scanner|
@@ -74,7 +74,7 @@ context 'Scanner' do
       end
     end
 
-    test 'Fixed' do
+    test "Fixed" do
       token = Controls::Parser::Tokens::Repeat.fixed
 
       assert scanner do |scanner|
@@ -82,7 +82,7 @@ context 'Scanner' do
       end
     end
 
-    test 'Bounded Range' do
+    test "Bounded Range" do
       token = Controls::Parser::Tokens::Repeat.bounded_range
 
       assert scanner do |scanner|
@@ -91,8 +91,8 @@ context 'Scanner' do
     end
   end
 
-  context 'Whitespace' do
-    test 'Single Space' do
+  context "Whitespace" do
+    test "Single Space" do
       whitespace = Controls::Values.whitespace
       token = Controls::Parser::Tokens.whitespace whitespace
 
@@ -101,7 +101,7 @@ context 'Scanner' do
       end
     end
 
-    test 'Comments' do
+    test "Comments" do
       token = Controls::Parser::Tokens.whitespace " ; some-comment\r\n "
 
       assert scanner do |scanner|
@@ -110,7 +110,7 @@ context 'Scanner' do
     end
   end
 
-  test 'Alternative Delimiter' do
+  test "Alternative Delimiter" do
     token = Controls::Parser::Tokens.alternative_delimiter
 
     assert scanner do |scanner|
@@ -118,7 +118,7 @@ context 'Scanner' do
     end
   end
 
-  test 'Newline' do
+  test "Newline" do
     token = Controls::Parser::Tokens.newline
 
     assert scanner do |scanner|
@@ -126,7 +126,7 @@ context 'Scanner' do
     end
   end
 
-  test 'Assignment' do
+  test "Assignment" do
     token = Controls::Parser::Tokens.assignment
 
     assert scanner do |scanner|
@@ -134,7 +134,7 @@ context 'Scanner' do
     end
   end
 
-  test 'RFC 5234' do
+  test "RFC 5234" do
     scanner = ABNF::Parser::Scanner.new
     abnf = Controls::Source::RFC5234.value
 
