@@ -8,7 +8,7 @@ context 'Recursive Descent Parser' do
       %w(BinVal DecVal HexVal).each do |base|
         %w(Single Sequence Range).each do |variant|
           test "#{base} #{variant}" do
-            tokens, expected_node = Controls::Parser::CompilerScenarios::Terminal::NumVal.example base, variant
+            tokens, expected_node = Controls::Parser::CompilerScenarios.num_val base, variant
 
             compiler = ABNF::Parser::Compiler.build tokens
             compiler.()
@@ -22,7 +22,7 @@ context 'Recursive Descent Parser' do
     end
 
     test 'Prose Values' do
-      tokens, expected_node = Controls::Parser::CompilerScenarios::Terminal.prose_val
+      tokens, expected_node = Controls::Parser::CompilerScenarios.prose_val
 
       compiler = ABNF::Parser::Compiler.build tokens
       compiler.()
@@ -33,7 +33,7 @@ context 'Recursive Descent Parser' do
     end
 
     test 'Character Values' do
-      tokens, expected_node = Controls::Parser::CompilerScenarios::Terminal.char_val
+      tokens, expected_node = Controls::Parser::CompilerScenarios.char_val
 
       compiler = ABNF::Parser::Compiler.build tokens
       compiler.()

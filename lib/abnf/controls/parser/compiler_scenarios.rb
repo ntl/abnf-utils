@@ -27,6 +27,13 @@ module ABNF
           Factory.(tokens, node)
         end
 
+        def self.char_val
+          token = Tokens.char_val
+          expected_node = AST::Nodes::Terminal.char_val
+
+          Factory.([token], expected_node)
+        end
+
         def self.concatenation
           strings = Values.concatenation.first 2
 
@@ -53,6 +60,18 @@ module ABNF
           Factory.(tokens, node)
         end
 
+        def self.num_val base=nil, variant=nil
+          base ||= 'HexVal'
+          variant ||= 'Sequence'
+
+          method_name = variant.downcase
+
+          token = Tokens::NumVal.example base, variant
+          expected_node = AST::Nodes::Terminal::NumVal.get base, variant
+
+          Factory.([token], expected_node)
+        end
+
         def self.option
           tokens = [Tokens.option_start, Terminal.char_val, Tokens.option_stop]
 
@@ -60,6 +79,13 @@ module ABNF
           node = AST::Nodes.optional terminal_node
 
           Factory.(tokens, node)
+        end
+
+        def self.prose_val
+          token = Tokens.prose_val
+          expected_node = AST::Nodes::Terminal.prose_val
+
+          Factory.([token], expected_node)
         end
 
         def self.reference rulename=nil
