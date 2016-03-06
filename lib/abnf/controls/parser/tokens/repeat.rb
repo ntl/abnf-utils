@@ -9,17 +9,20 @@ module ABNF
 
           def self.any_number
             abnf = Source::Repeat.any_number
-            ::ABNF::Parser::Token::Repeat.new abnf, 'minimum' => '', 'maximum' => ''
+
+            ABNF::Parser::Token::Repeat.new abnf, 'minimum' => '', 'maximum' => ''
           end
 
           def self.fixed
             abnf = Source::Repeat.fixed
-            ::ABNF::Parser::Token::Repeat.new abnf, 'minimum' => '2', 'maximum' => '2'
+
+            ABNF::Parser::Token::Repeat.new abnf, 'minimum' => '2', 'maximum' => '2'
           end
 
           def self.bounded_range
             abnf = Source::Repeat.bounded_range
-            ::ABNF::Parser::Token::Repeat.new abnf, 'minimum' => '1', 'maximum' => '2'
+
+            ABNF::Parser::Token::Repeat.new abnf, 'minimum' => '1', 'maximum' => '2'
           end
         end
       end

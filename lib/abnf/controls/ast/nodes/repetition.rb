@@ -7,31 +7,31 @@ module ABNF
             any_number
           end
 
-          def self.any_number element=nil
-            element ||= Terminal.char_val
+          def self.any_number
+            char_val = Nodes.char_val
 
-            abnf = "#{Source::Repeat.any_number}#{element.abnf}"
+            abnf = "#{Source::Repeat.any_number}#{char_val.abnf}"
             range = Values::Repetition.any_number
 
-            ::ABNF::Parser::Node::Repetition.new abnf, range, element
+            ABNF::Parser::Node::Repetition.new abnf, range, char_val
           end
 
-          def self.fixed element=nil
-            element ||= Terminal.char_val
+          def self.fixed
+            char_val = Nodes.char_val
 
-            abnf = "#{Source::Repeat.fixed}#{element.abnf}"
+            abnf = "#{Source::Repeat.fixed}#{char_val.abnf}"
             range = Values::Repetition.fixed
 
-            ::ABNF::Parser::Node::Repetition.new abnf, range, element
+            ABNF::Parser::Node::Repetition.new abnf, range, char_val
           end
 
-          def self.bounded_range element=nil
-            element ||= Terminal.char_val
+          def self.bounded_range
+            char_val = Nodes.char_val
 
-            abnf = "#{Source::Repeat.bounded_range}#{element.abnf}"
+            abnf = "#{Source::Repeat.bounded_range}#{char_val.abnf}"
             range = Values::Repetition.bounded_range
 
-            ::ABNF::Parser::Node::Repetition.new abnf, range, element
+            ABNF::Parser::Node::Repetition.new abnf, range, char_val
           end
         end
       end

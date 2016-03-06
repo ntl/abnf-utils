@@ -1,6 +1,6 @@
 require 'abnf/controls/ast/nodes'
+require 'abnf/controls/ast/nodes/num_val'
 require 'abnf/controls/ast/nodes/repetition'
-require 'abnf/controls/ast/nodes/terminal'
 require 'abnf/controls/parser/compiler_scenarios'
 require 'abnf/controls/parser/compiler_scenarios/factory'
 require 'abnf/controls/parser/compiler_scenarios/repetition'

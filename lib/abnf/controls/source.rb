@@ -10,7 +10,8 @@ module ABNF
       end
 
       def self.char_val character_sequence=nil
-        character_sequence ||= Values::Terminal.character_sequence
+        character_sequence ||= Values.character_sequence
+
         %{"#{character_sequence}"}
       end
 
@@ -34,8 +35,9 @@ module ABNF
         ' ]'
       end
 
-      def self.prose_val prose=nil
-        prose ||= Values::Terminal.prose
+      def self.prose_val
+        prose = Values.prose
+
         "<#{prose}>"
       end
 
@@ -43,11 +45,11 @@ module ABNF
         Repeat.example
       end
 
-      def self.rule rulename: nil, element: nil
-        rulename ||= Values.rulename
-        element ||= Values.terminal
+      def self.rule
+        rulename = Values.rulename
+        rule = char_val
 
-        "#{rulename} = #{element}\r\n"
+        "#{rulename} = #{rule}\r\n"
       end
 
       def self.whitespace

@@ -3,37 +3,48 @@ module ABNF
     module AST
       module Nodes
         def self.example
-          Terminal.example
+          char_val
         end
 
-        def self.alternation elements=nil
+        def self.alternation
           abnf = String.new
+          alternatives = []
 
-          elements ||= Values.alternation.map do |string|
-            Terminal.char_val string
+          Values.alternation.each do |string|
+            alternative = char_val string
+
+            abnf << Source.alternative_delimiter unless abnf.empty?
+            abnf << alternative.abnf
+            alternatives << alternative
           end
 
-          delimiter = Source.alternative_delimiter
-          abnf = elements.map(&:abnf) * delimiter
-
-          ::ABNF::Parser::Node::Alternation.new abnf, elements
+          ABNF::Parser::Node::Alternation.new abnf, alternatives
         end
 
-        def self.concatenation elements=nil
-          abnf = String.new
+        def self.char_val character_sequence=nil
+          character_sequence ||= Controls::Values.character_sequence
+          abnf = Source.char_val character_sequence
 
-          elements ||= Values.concatenation.map do |string|
-            Terminal.char_val string
+          ABNF::Parser::Node::Terminal::Sequence.new abnf, character_sequence
+        end
+
+        def self.concatenation
+          abnf = String.new
+          repetitions = []
+
+          Values.concatenation.each do |string|
+            repetition = char_val string
+
+            abnf << Source.whitespace unless abnf.empty?
+            abnf << repetition.abnf
+            repetitions << repetition
           end
 
-          whitespace = Source.whitespace
-          abnf = elements.map(&:abnf) * whitespace
-
-          ::ABNF::Parser::Node::Concatenation.new abnf, elements
+          ABNF::Parser::Node::Concatenation.new abnf, repetitions
         end
 
-        def self.group element=nil
-          element ||= Terminal.char_val
+        def self.group
+          element = char_val
 
           abnf = [
             Source.group_start,
@@ -45,8 +56,12 @@ module ABNF
           element
         end
 
-        def self.optional element=nil
-          element ||= Terminal.char_val
+        def self.num_val
+          NumVal.example
+        end
+
+        def self.option
+          element = char_val
 
           abnf = [
             Source.option_start,
@@ -56,12 +71,19 @@ module ABNF
 
           range = (0..1)
 
-          ::ABNF::Parser::Node::Repetition.new abnf, range, element
+          ABNF::Parser::Node::Repetition.new abnf, range, element
         end
 
-        def self.reference rulename=nil
-          rulename ||= Values.rulename
-          ::ABNF::Parser::Node::Reference.new rulename
+        def self.prose_val
+          prose = Values.prose
+
+          ABNF::Parser::Node::Terminal::ProseVal.new prose
+        end
+
+        def self.reference
+          rulename = Values.rulename
+
+          ABNF::Parser::Node::Reference.new rulename
         end
       end
     end

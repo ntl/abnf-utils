@@ -3,81 +3,35 @@ module ABNF
     module Source
       module NumVal
         def self.example
-          HexVal.sequence
+          sequence
         end
 
-        module BinVal
-          def self.range character_range=nil
-            NumVal.range character_range, base: 2
-          end
-
-          def self.sequence character_sequence=nil
-            NumVal.sequence character_sequence, base: 2
-          end
-
-          def self.single character=nil
-            NumVal.single character, base: 2
-          end
-        end
-
-        module DecVal
-          def self.range character_range=nil
-            NumVal.range character_range, base: 10
-          end
-
-          def self.sequence character_sequence=nil
-            NumVal.sequence character_sequence, base: 10
-          end
-
-          def self.single character=nil
-            NumVal.single character, base: 10
-          end
-        end
-
-        module HexVal
-          def self.range character_range=nil
-            NumVal.range character_range, base: 16
-          end
-
-          def self.sequence character_sequence=nil
-            NumVal.sequence character_sequence, base: 16
-          end
-
-          def self.single character=nil
-            NumVal.single character, base: 16
-          end
-        end
-
-        def self.range character_range=nil, base: nil
+        def self.range base=nil
           base ||= 16
-          character_range ||= Values::Terminal.character_range
+          character_range = Values.character_range
 
           first, *, last = character_range.to_a
-
           prefix, first, last = convert "#{first}#{last}", base
 
           "%#{prefix}#{first}-#{last}"
         end
 
-        def self.sequence character_sequence=nil, base: nil
+        def self.sequence base=nil
           base ||= 16
-          character_sequence ||= Values::Terminal.character_sequence
+          character_sequence = Values.character_sequence
 
           prefix, *character_codes = convert character_sequence, base
 
           "%#{prefix}#{character_codes * '.'}"
         end
 
-        def self.single character=nil, base: nil
-          character ||= Values::Terminal.single_character
+        def self.single base=nil
+          base ||= 16
+          character = Values.single_character
 
           prefix, character_code = convert character, base
 
           "%#{prefix}#{character_code}"
-        end
-
-        def self.example
-          sequence
         end
 
         def self.convert string, base

@@ -10,14 +10,16 @@ module ABNF
           '*'
         end
 
-        def self.fixed count=nil
-          range ||= Values::Repetition.fixed
+        def self.fixed
+          range = Values::Repetition.fixed
+
           count = range.first
           count.to_s
         end
 
-        def self.bounded_range range=nil
-          range ||= Values::Repetition.bounded_range
+        def self.bounded_range
+          range = Values::Repetition.bounded_range
+
           "#{range.first}*#{range.last}"
         end
       end

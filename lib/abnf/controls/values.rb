@@ -17,6 +17,10 @@ module ABNF
         %w(first-element second-element)
       end
 
+      def self.num_val_bases
+        { 'bin-val' => 2, 'dec-val' => 10, 'hex-val' => 16 }
+      end
+
       def self.option
         'optional-string'
       end
@@ -26,7 +30,7 @@ module ABNF
       end
 
       def self.repetition
-        Repetition.any_number
+        Repetition.example
       end
 
       def self.rulename

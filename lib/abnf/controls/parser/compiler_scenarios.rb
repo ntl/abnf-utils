@@ -2,97 +2,68 @@ module ABNF
   module Controls
     module Parser
       module CompilerScenarios
-        def self.example
-          tokens = [Terminal.example]
-          node = Nodes.example
-
-          Factory.(tokens, node)
-        end
-
         def self.alternation
-          strings = Values.alternation.first 2
+          first_string, second_string = Values.alternation
 
           tokens = [
-            Tokens.char_val(strings[0]),
+            Tokens.char_val(first_string),
             Tokens.alternative_delimiter,
-            Tokens.char_val(strings[1]),
+            Tokens.char_val(second_string),
           ]
 
-          nodes = strings.map do |string|
-            AST::Nodes::Terminal.char_val string
-          end
-
-          node = AST::Nodes.alternation nodes
-
-          Factory.(tokens, node)
+          Factory.(tokens, AST::Nodes.alternation)
         end
 
         def self.char_val
           token = Tokens.char_val
-          expected_node = AST::Nodes::Terminal.char_val
+          expected_node = AST::Nodes.char_val
 
           Factory.([token], expected_node)
         end
 
         def self.concatenation
-          strings = Values.concatenation.first 2
+          first_string, second_string = Values.concatenation
 
           tokens = [
-            Tokens.char_val(strings[0]),
+            Tokens.char_val(first_string),
             Tokens.whitespace,
-            Tokens.char_val(strings[1]),
+            Tokens.char_val(second_string),
           ]
 
-          nodes = strings.map do |string|
-            AST::Nodes::Terminal.char_val string
-          end
-          node = AST::Nodes.concatenation nodes
-
-          Factory.(tokens, node)
+          Factory.(tokens, AST::Nodes.concatenation)
         end
 
         def self.group
           tokens = [Tokens.group_start, Tokens.char_val, Tokens.group_stop]
-
-          terminal_node = AST::Nodes::Terminal.example
-          node = AST::Nodes.group terminal_node
+          node = AST::Nodes.group
 
           Factory.(tokens, node)
         end
 
         def self.num_val base=nil, variant=nil
-          base ||= 'HexVal'
-          variant ||= 'Sequence'
-
-          method_name = variant.downcase
-
           token = Tokens::NumVal.example base, variant
-          expected_node = AST::Nodes::Terminal::NumVal.get base, variant
+          expected_node = AST::Nodes::NumVal.example base, variant
 
           Factory.([token], expected_node)
         end
 
         def self.option
-          tokens = [Tokens.option_start, Terminal.char_val, Tokens.option_stop]
-
-          terminal_node = AST::Nodes::Terminal.char_val
-          node = AST::Nodes.optional terminal_node
+          tokens = [Tokens.option_start, Tokens.char_val, Tokens.option_stop]
+          node = AST::Nodes.option
 
           Factory.(tokens, node)
         end
 
         def self.prose_val
           token = Tokens.prose_val
-          expected_node = AST::Nodes::Terminal.prose_val
+          expected_node = AST::Nodes.prose_val
 
           Factory.([token], expected_node)
         end
 
-        def self.reference rulename=nil
-          rulename ||= Values.rulename
-
-          tokens = [Tokens.rulename(rulename)]
-          node = AST::Nodes.reference rulename
+        def self.reference
+          tokens = [Tokens.rulename]
+          node = AST::Nodes.reference
 
           Factory.(tokens, node)
         end

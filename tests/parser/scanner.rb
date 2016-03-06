@@ -4,9 +4,9 @@ context "Scanner" do
   scanner = ABNF::Parser::Scanner.new
 
   context "Numeric Values" do
-    %w(BinVal DecVal HexVal).each do |base|
-      %w(Single Sequence Range).each do |variant|
-        test "#{base} #{variant}" do
+    Controls::Values.num_val_bases.each do |label, base|
+      %w(single sequence range).each do |variant|
+        test "#{label} #{variant}" do
           token = Controls::Parser::Tokens::NumVal.example base, variant
 
           assert scanner do |scanner|
@@ -93,7 +93,7 @@ context "Scanner" do
 
   context "Whitespace" do
     test "Single Space" do
-      whitespace = Controls::Values.whitespace
+      whitespace = Controls::Source.whitespace
       token = Controls::Parser::Tokens.whitespace whitespace
 
       assert scanner do |scanner|
