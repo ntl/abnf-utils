@@ -10,7 +10,7 @@ module ABNF
           def self.any_number element=nil
             element ||= Terminal.char_val
 
-            abnf = "#{Controls::ABNF::Repeat.any_number}#{element.abnf}"
+            abnf = "#{Source::Repeat.any_number}#{element.abnf}"
             range = Values::Repetition.any_number
 
             ::ABNF::Parser::Node::Repetition.new abnf, range, element
@@ -19,7 +19,7 @@ module ABNF
           def self.fixed element=nil
             element ||= Terminal.char_val
 
-            abnf = "#{Controls::ABNF::Repeat.fixed}#{element.abnf}"
+            abnf = "#{Source::Repeat.fixed}#{element.abnf}"
             count = Values::Repetition.fixed
             range = (count..count)
 
@@ -29,7 +29,7 @@ module ABNF
           def self.bounded_range element=nil
             element ||= Terminal.char_val
 
-            abnf = "#{Controls::ABNF::Repeat.bounded_range}#{element.abnf}"
+            abnf = "#{Source::Repeat.bounded_range}#{element.abnf}"
             range = Values::Repetition.bounded_range
 
             ::ABNF::Parser::Node::Repetition.new abnf, range, element

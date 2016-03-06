@@ -3,7 +3,7 @@ module ABNF
     module Parser
       module Tokens
         def self.alternative_delimiter
-          abnf = ABNF.alternative_delimiter
+          abnf = Source.alternative_delimiter
           ::ABNF::Parser::Token::AlternativeDelimiter.new abnf, Hash.new
         end
 
@@ -13,17 +13,17 @@ module ABNF
 
         def self.char_val character_sequence=nil
           character_sequence ||= Values.character_sequence
-          abnf = ABNF.char_val character_sequence
+          abnf = Source.char_val character_sequence
           ::ABNF::Parser::Token::CharVal.new abnf, 'characters' => character_sequence
         end
 
         def self.group_start
-          abnf = ABNF.group_start
+          abnf = Source.group_start
           ::ABNF::Parser::Token::GroupStart.new abnf, Hash.new
         end
 
         def self.group_stop
-          abnf = ABNF.group_stop
+          abnf = Source.group_stop
           ::ABNF::Parser::Token::GroupStop.new abnf, Hash.new
         end
 
@@ -36,18 +36,18 @@ module ABNF
         end
 
         def self.option_start
-          abnf = ABNF.option_start
+          abnf = Source.option_start
           ::ABNF::Parser::Token::OptionStart.new abnf, Hash.new
         end
 
         def self.option_stop
-          abnf = ABNF.option_stop
+          abnf = Source.option_stop
           ::ABNF::Parser::Token::OptionStop.new abnf, Hash.new
         end
 
         def self.prose_val prose=nil
           prose ||= Values.prose
-          abnf = ABNF.prose_val prose
+          abnf = Source.prose_val prose
           ::ABNF::Parser::Token::ProseVal.new abnf, 'prose' => prose
         end
 
@@ -61,7 +61,7 @@ module ABNF
         end
 
         def self.whitespace whitespace=nil
-          whitespace ||= ABNF.whitespace
+          whitespace ||= Source.whitespace
           ::ABNF::Parser::Token::Whitespace.new whitespace, Hash.new
         end
       end

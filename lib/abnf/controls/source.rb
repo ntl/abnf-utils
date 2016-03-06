@@ -54,7 +54,5 @@ module ABNF
         Values.whitespace
       end
     end
-
-    ABNF = Source
   end
 end

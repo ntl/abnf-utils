@@ -13,7 +13,7 @@ module ABNF
             Terminal.char_val string
           end
 
-          delimiter = Controls::ABNF.alternative_delimiter
+          delimiter = Source.alternative_delimiter
           abnf = elements.map(&:abnf) * delimiter
 
           ::ABNF::Parser::Node::Alternation.new abnf, elements
@@ -26,7 +26,7 @@ module ABNF
             Terminal.char_val string
           end
 
-          whitespace = Controls::ABNF.whitespace
+          whitespace = Source.whitespace
           abnf = elements.map(&:abnf) * whitespace
 
           ::ABNF::Parser::Node::Concatenation.new abnf, elements
@@ -36,9 +36,9 @@ module ABNF
           element ||= Terminal.char_val
 
           abnf = [
-            Controls::ABNF.group_start,
+            Source.group_start,
             element.abnf,
-            Controls::ABNF.group_stop,
+            Source.group_stop,
           ].join
 
           element.abnf = abnf
@@ -49,9 +49,9 @@ module ABNF
           element ||= Terminal.char_val
 
           abnf = [
-            Controls::ABNF.option_start,
+            Source.option_start,
             element.abnf,
-            Controls::ABNF.option_stop,
+            Source.option_stop,
           ].join
 
           range = (0..1)

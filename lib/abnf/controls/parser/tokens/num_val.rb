@@ -20,7 +20,7 @@ module ABNF
           module BinVal
             def self.range
               character_range = Values.character_range
-              abnf = ABNF::NumVal::BinVal.range character_range
+              abnf = Source::NumVal::BinVal.range character_range
 
               characters = NumVal.extract_characters abnf
 
@@ -29,7 +29,7 @@ module ABNF
 
             def self.sequence
               character_sequence = Values.character_sequence
-              abnf = ABNF::NumVal::BinVal.sequence character_sequence
+              abnf = Source::NumVal::BinVal.sequence character_sequence
 
               characters = NumVal.extract_characters abnf
 
@@ -38,7 +38,7 @@ module ABNF
 
             def self.single
               character = Values.single_character
-              abnf = ABNF::NumVal::BinVal.single character
+              abnf = Source::NumVal::BinVal.single character
 
               characters = NumVal.extract_characters abnf
 
@@ -49,7 +49,7 @@ module ABNF
           module DecVal
             def self.range
               character_range = Values.character_range
-              abnf = ABNF::NumVal::DecVal.range character_range
+              abnf = Source::NumVal::DecVal.range character_range
 
               characters = NumVal.extract_characters abnf
 
@@ -58,7 +58,7 @@ module ABNF
 
             def self.sequence
               character_sequence = Values.character_sequence
-              abnf = ABNF::NumVal::DecVal.sequence character_sequence
+              abnf = Source::NumVal::DecVal.sequence character_sequence
 
               characters = NumVal.extract_characters abnf
 
@@ -67,7 +67,7 @@ module ABNF
 
             def self.single
               character = Values.single_character
-              abnf = ABNF::NumVal::DecVal.single character
+              abnf = Source::NumVal::DecVal.single character
 
               characters = NumVal.extract_characters abnf
 
@@ -78,7 +78,7 @@ module ABNF
           module HexVal
             def self.range
               character_range = Values.character_range
-              abnf = ABNF::NumVal::HexVal.range character_range
+              abnf = Source::NumVal::HexVal.range character_range
 
               characters = NumVal.extract_characters abnf
 
@@ -87,7 +87,7 @@ module ABNF
 
             def self.sequence
               character_sequence = Values.character_sequence
-              abnf = ABNF::NumVal::HexVal.sequence character_sequence
+              abnf = Source::NumVal::HexVal.sequence character_sequence
 
               characters = NumVal.extract_characters abnf
 
@@ -96,7 +96,7 @@ module ABNF
 
             def self.single
               character = Values.single_character
-              abnf = ABNF::NumVal::HexVal.single character
+              abnf = Source::NumVal::HexVal.single character
 
               characters = NumVal.extract_characters abnf
 
