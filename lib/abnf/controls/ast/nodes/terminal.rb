@@ -19,7 +19,12 @@ module ABNF
           end
 
           module NumVal
-            def self.get base, method_name
+            def self.get base=nil, variant=nil
+              base ||= 'HexVal'
+              variant ||= 'Sequence'
+
+              method_name = variant.downcase
+
               mod = const_get base
               mod.public_send method_name
             end

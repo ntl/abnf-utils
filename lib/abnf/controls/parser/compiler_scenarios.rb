@@ -13,9 +13,9 @@ module ABNF
           strings = Values.alternation.first 2
 
           tokens = [
-            Tokens::Terminal.char_val(strings[0]),
+            Tokens.char_val(strings[0]),
             Tokens.alternative_delimiter,
-            Tokens::Terminal.char_val(strings[1]),
+            Tokens.char_val(strings[1]),
           ]
 
           nodes = strings.map do |string|
@@ -31,9 +31,9 @@ module ABNF
           strings = Values.concatenation.first 2
 
           tokens = [
-            Tokens::Terminal.char_val(strings[0]),
+            Tokens.char_val(strings[0]),
             Tokens.whitespace,
-            Tokens::Terminal.char_val(strings[1]),
+            Tokens.char_val(strings[1]),
           ]
 
           nodes = strings.map do |string|
@@ -45,9 +45,9 @@ module ABNF
         end
 
         def self.group
-          tokens = [Tokens.group_start, Tokens::Terminal.example, Tokens.group_stop]
+          tokens = [Tokens.group_start, Tokens.char_val, Tokens.group_stop]
 
-          terminal_node = Controls::AST::Nodes::Terminal.example
+          terminal_node = AST::Nodes::Terminal.example
           node = AST::Nodes.group terminal_node
 
           Factory.(tokens, node)
@@ -56,7 +56,7 @@ module ABNF
         def self.option
           tokens = [Tokens.option_start, Terminal.char_val, Tokens.option_stop]
 
-          terminal_node = Controls::AST::Nodes::Terminal.char_val
+          terminal_node = AST::Nodes::Terminal.char_val
           node = AST::Nodes.optional terminal_node
 
           Factory.(tokens, node)

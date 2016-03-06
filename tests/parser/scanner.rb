@@ -6,10 +6,8 @@ context 'Scanner' do
   context 'Numeric Values' do
     %w(BinVal DecVal HexVal).each do |base|
       %w(Single Sequence Range).each do |variant|
-        method_name = variant.downcase
-
         test "#{base} #{variant}" do
-          token = Controls::Parser::Tokens::Terminal::NumVal.get base, method_name
+          token = Controls::Parser::Tokens::NumVal.example base, variant
 
           assert scanner do |scanner|
             scanner.token_rescannable? token
@@ -20,7 +18,7 @@ context 'Scanner' do
   end
 
   test 'Character Values' do
-    token = Controls::Parser::Tokens::Terminal.char_val
+    token = Controls::Parser::Tokens.char_val
 
     assert scanner do |scanner|
       scanner.token_rescannable? token
@@ -28,7 +26,7 @@ context 'Scanner' do
   end
 
   test 'Prose Values' do
-    token = Controls::Parser::Tokens::Terminal.prose_val
+    token = Controls::Parser::Tokens.prose_val
 
     assert scanner do |scanner|
       scanner.token_rescannable? token

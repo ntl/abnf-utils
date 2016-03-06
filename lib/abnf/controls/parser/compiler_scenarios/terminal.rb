@@ -4,7 +4,7 @@ module ABNF
       module CompilerScenarios
         module Terminal
           def self.char_val
-            token = Tokens::Terminal.char_val
+            token = Tokens.char_val
             expected_node = AST::Nodes::Terminal.char_val
 
             Factory.([token], expected_node)
@@ -15,7 +15,7 @@ module ABNF
           end
 
           def self.prose_val
-            token = Tokens::Terminal.prose_val
+            token = Tokens.prose_val
             expected_node = AST::Nodes::Terminal.prose_val
 
             Factory.([token], expected_node)
@@ -28,8 +28,8 @@ module ABNF
 
               method_name = variant.downcase
 
-              token = Tokens::Terminal::NumVal.get base, method_name
-              expected_node = AST::Nodes::Terminal::NumVal.get base, method_name
+              token = Tokens::NumVal.example base, variant
+              expected_node = AST::Nodes::Terminal::NumVal.get base, variant
 
               Factory.([token], expected_node)
             end
