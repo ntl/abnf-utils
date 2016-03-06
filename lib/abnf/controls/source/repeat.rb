@@ -11,7 +11,8 @@ module ABNF
         end
 
         def self.fixed count=nil
-          count ||= Values::Repetition.fixed
+          range ||= Values::Repetition.fixed
+          count = range.first
           count.to_s
         end
 

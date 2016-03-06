@@ -7,7 +7,7 @@ module ABNF
         end
 
         def self.fixed
-          2
+          (2..2)
         end
 
         def self.bounded_range

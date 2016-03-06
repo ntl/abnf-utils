@@ -20,8 +20,7 @@ module ABNF
             element ||= Terminal.char_val
 
             abnf = "#{Source::Repeat.fixed}#{element.abnf}"
-            count = Values::Repetition.fixed
-            range = (count..count)
+            range = Values::Repetition.fixed
 
             ::ABNF::Parser::Node::Repetition.new abnf, range, element
           end
