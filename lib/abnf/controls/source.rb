@@ -1,12 +1,17 @@
 module ABNF
   module Controls
-    module ABNF
+    module Source
       def self.alternative_delimiter
         ' / '
       end
 
       def self.bad_syntax
         '!invalid-abnf'
+      end
+
+      def self.char_val character_sequence=nil
+        character_sequence ||= Values::Terminal.character_sequence
+        %{"#{character_sequence}"}
       end
 
       def self.group_start
@@ -17,8 +22,8 @@ module ABNF
         ' )'
       end
 
-      def self.terminal
-        Terminal.example
+      def self.num_val
+        NumVal.example
       end
 
       def self.option_start
@@ -27,6 +32,15 @@ module ABNF
 
       def self.option_stop
         ' ]'
+      end
+
+      def self.prose_val prose=nil
+        prose ||= Values::Terminal.prose
+        "<#{prose}>"
+      end
+
+      def self.repeat
+        Repeat.example
       end
 
       def self.rule rulename: nil, element: nil
@@ -40,5 +54,7 @@ module ABNF
         Values.whitespace
       end
     end
+
+    ABNF = Source
   end
 end

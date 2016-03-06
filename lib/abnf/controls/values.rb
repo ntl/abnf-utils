@@ -5,6 +5,14 @@ module ABNF
         %w(first-choice second-choice)
       end
 
+      def self.character_range
+        ('A'..'Z')
+      end
+
+      def self.character_sequence
+        'some-string'
+      end
+
       def self.concatenation
         %w(first-element second-element)
       end
@@ -13,16 +21,20 @@ module ABNF
         'optional-string'
       end
 
+      def self.prose
+        'Some Prose'
+      end
+
       def self.repetition
-        Repetition.value
+        Repetition.example
       end
 
       def self.rulename
         'some-rule'
       end
 
-      def self.terminal
-        Terminal.example
+      def self.single_character
+        '#'
       end
 
       def self.whitespace

@@ -3,7 +3,7 @@ module ABNF
     module Values
       module Repetition
         def self.example
-          any
+          any_number
         end
 
         def self.any_number

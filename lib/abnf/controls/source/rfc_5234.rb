@@ -1,6 +1,6 @@
 module ABNF
   module Controls
-    module ABNF
+    module Source
       module RFC5234
         def self.value
           <<~ABNF.split("\n").map { |line| "#{line}\r\n" }.join

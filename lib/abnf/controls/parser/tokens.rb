@@ -12,8 +12,8 @@ module ABNF
         end
 
         def self.char_val character_sequence=nil
-          character_sequence ||= Values::Terminal.character_sequence
-          abnf = ABNF::Terminal.char_val character_sequence
+          character_sequence ||= Values.character_sequence
+          abnf = ABNF.char_val character_sequence
           ::ABNF::Parser::Token::CharVal.new abnf, 'characters' => character_sequence
         end
 
@@ -46,8 +46,8 @@ module ABNF
         end
 
         def self.prose_val prose=nil
-          prose ||= Values::Terminal.prose
-          abnf = ABNF::Terminal.prose_val prose
+          prose ||= Values.prose
+          abnf = ABNF.prose_val prose
           ::ABNF::Parser::Token::ProseVal.new abnf, 'prose' => prose
         end
 

@@ -1,6 +1,6 @@
 module ABNF
   module Controls
-    module ABNF
+    module Source
       module Repeat
         def self.example
           any_number
